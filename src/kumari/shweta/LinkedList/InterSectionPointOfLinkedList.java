@@ -9,7 +9,7 @@ import com.sun.source.tree.WhileLoopTree;
 
 /**
  * @author Shweta Kumari
- * @Email Id 
+ * @Email id shwetakumarikiit0729@gmail.com
  *
  */
 
@@ -22,7 +22,6 @@ class Node1 {
 		this.data = data;
 		next = null;
 	}
-
 }
 
 public class InterSectionPointOfLinkedList {
@@ -73,7 +72,6 @@ public class InterSectionPointOfLinkedList {
 			Node11 = Node11.next;
 		}
 		return pointofIntersection;
-
 	}
 
 	public static void main(String[] args) {

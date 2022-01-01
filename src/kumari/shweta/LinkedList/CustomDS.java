@@ -1,15 +1,17 @@
 package kumari.shweta.LinkedList;
-
+/**
+ * @author Shweta Kumari
+ * @Email id shwetakumarikiit0729@gmail.com
+ *
+ */
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
 public class CustomDS {
-
 	HashMap<Integer, HashSet<Integer>> map1;
 	HashMap<Integer, Integer> map2;
 	Random random;
-
 	public CustomDS() {
 		map1 = new HashMap<>();
 		map2 = new HashMap<>();

@@ -4,15 +4,14 @@ package kumari.shweta.LinkedList;
  * @Mail id : shwetakumarikiit0729@gmail.com
  *
  */
-
 class Node {
 	int data;
 	Node next;
+
 	Node(int data) {
 		this.data = data;
 		next = null;
 	}
-
 }
 
 public class SingleLinkedListAllFeature {
@@ -23,7 +22,6 @@ public class SingleLinkedListAllFeature {
 		Node node = new Node(element);
 		node.next = head;
 		head = node;
-
 	}
 	// Insert Node at end
 	public void insertNodeAtEnd(int element) {
@@ -32,21 +30,18 @@ public class SingleLinkedListAllFeature {
 		if (head == null) {
 			head = node;
 		} else {
-            Node last = head;
+			Node last = head;
 			while (last.next != null) {
 				last = last.next;
 
 			}
 			last.next = node;
 		}
-
 	}
 
 	// Insert Node in between two nodes
 	// Case 1 : Insert node before a Node
-
 	public void insertNodeBeforeAnode(int element, int item) {
-
 		Node node = new Node(element);
 		Node last = head;
 		if (last == null) {
@@ -69,7 +64,6 @@ public class SingleLinkedListAllFeature {
 				System.out.println("Item is not available in Linked List");
 
 			}
-
 		}
 	}
 
@@ -95,11 +89,9 @@ public class SingleLinkedListAllFeature {
 			if (!itemFound) {
 				System.out.println("Item is not available in Linked List");
 			}
-
 		}
-
 	}
-	
+
 	public void deleteFirstNode() {
 		boolean isDeleted;
 		if(head == null ) {
@@ -110,51 +102,50 @@ public class SingleLinkedListAllFeature {
 	}
 
 	public void deleteGivenItem(int item) {
-		
-		Node temp=head;
+
+		Node temp = head;
 		Node targetNode;
-		boolean isDeleted=false;
-		if(head==null) {
+		boolean isDeleted = false;
+		if (head == null) {
 			System.out.println("List is empty");
-		}  else {
-		while(temp.next!=null) {
-			if(temp.next.data==item) {
-				targetNode=temp.next;
-				temp.next=targetNode.next;
-				isDeleted=true;
-				break;
-				
+		} else {
+			while (temp.next != null) {
+				if (temp.next.data == item) {
+					targetNode = temp.next;
+					temp.next = targetNode.next;
+					isDeleted = true;
+					break;
+
+				}
+				temp = temp.next;
 			}
-			temp=temp.next;
 		}
-		}
-		if(!isDeleted) {
+		if (!isDeleted) {
 			System.out.println("Target to be deleted item not found");
 		} else {
-			System.out.println(item+" Deleted Successfully");
+			System.out.println(item + " Deleted Successfully");
 		}
 	}
 	
-public void deleteAtPosition(int position) {
-	
-	Node temp;
-	temp=head;
-	try {
-	if(position==0) {
-		head=temp.next;
+	public void deleteAtPosition(int position) {
+
+		Node temp;
+		temp = head;
+		try {
+			if (position == 0) {
+				head = temp.next;
+			}
+			for (int i = 0; temp != null && i < position - 2; i++) {
+				temp = temp.next;
+			}
+
+			Node kNode = temp.next.next;
+			temp.next = kNode;
+		} catch (Exception e) {
+			System.out.println("Position beyond range");
+
+		}
 	}
-	for(int i =0 ;temp!=null&&i<position-2;i++) {
-		temp=temp.next;
-	}
-	
-	Node kNode=temp.next.next;
-	temp.next=kNode;
-	}catch (Exception e){
-		System.out.println("Position beyond range");
-		
-	}
-	
-}
 	
 	// Traversing LinkedList
 	public void traversal() {
@@ -164,7 +155,6 @@ public void deleteAtPosition(int position) {
 			System.out.println(tNode.data);
 			tNode = tNode.next;
 		}
-
 	}
 
 	public static void main(String[] args) {
@@ -194,5 +184,4 @@ public void deleteAtPosition(int position) {
 		linkedList.traversal();
 		
 	}
-
 }

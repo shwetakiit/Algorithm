@@ -1,9 +1,12 @@
 package kumari.shweta.LinkedList;
+/**
+ * @author Shweta Kumari
+ * @Email id shwetakumarikiit0729@gmail.com
+ *
+ */
 
 import java.util.HashSet;
 import java.util.Iterator;
-
-
 
 public class CustomDSWithOutDuplicate {
 	
@@ -44,10 +47,6 @@ HashSet<Integer> set ;
 			System.out.println(itr.next());
 		}
 
-		
-		
-		
-		
 	}
 
 }
