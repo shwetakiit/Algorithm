@@ -151,6 +151,9 @@ public class SingleLinkedListAllFeature {
 	public void traversal() {
 
 		Node tNode = head;
+		if(tNode==null) {
+			System.out.println("Empty List \n");
+		}
 		while (tNode != null) {
 			System.out.println(tNode.data);
 			tNode = tNode.next;

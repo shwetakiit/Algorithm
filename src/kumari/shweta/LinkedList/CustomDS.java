@@ -55,6 +55,8 @@ public class CustomDS {
 			setChange.remove(size);
 			setChange.add(toRemove);
 			map2.remove(size);
+	        map2.remove(toRemove);
+	        map2.put(toRemove, key);
 			return true;
 		}
 
@@ -81,17 +83,23 @@ public class CustomDS {
 		for (int i = 0; i < 5; i++) {
 			customDS.insert(i);
 		}
-		System.out.println(customDS.map1);
-		System.out.println(customDS.map2);
+		
+	//	System.out.println(customDS.map1);
+		//System.out.println(customDS.map2);
+        customDS.insert(3);
+        customDS.insert(1);
+        customDS.insert(2);
         customDS.insert(3);
 		System.out.println(customDS.map1);
 		System.out.println(customDS.map2);
-		System.out.println("Aftre removing");
-		customDS.remove(3);
+		System.out.println("Aftre removing"); 
+		customDS.remove(2);
+		
 		System.out.println(customDS.map1);
 		System.out.println(customDS.map2);
-		System.out.println("Return random value ");
+
+	/*	System.out.println("Return random value ");
 		int randomNumber = customDS.getRandom();
-		System.out.println("Random number is " + randomNumber);
+		System.out.println("Random number is " + randomNumber); */
 	}
 }

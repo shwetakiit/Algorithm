@@ -23,7 +23,7 @@ public class DoublyLinkedList {
 	// Insert not at beginning
 	/*
 	 * Case 1 :If Linked List is Empty 
-	 * Case 2: If Linked Lit is not Empty
+	 * Case 2: If Linked List is not Empty
 	 */
 	public void insertAtBeginning(int data) {
 		DoublyNode node = new DoublyNode(data);
