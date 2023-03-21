@@ -16,7 +16,7 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
  * 
  */
 public class SumArrayOfMaxSum {
-	// Brute force approach 1
+	// Brute force approach 1  ) best and average TC O(N) worst case TC O(N^2), SC O(1)
 	static int maximumSumOfSubArray(List<Integer> list, int K) {
 		int maxsum = Integer.MIN_VALUE;
 		for (int i = 0; i <= list.size() - K; i++) {
@@ -35,7 +35,7 @@ public class SumArrayOfMaxSum {
 
 	}
 
-	// 2nd Brute force approach
+	// 2nd Brute force approach best and average TC O(N) worst case TC O(N^2), SC O(1)
 	static int maximumSumOfSubArray1(List<Integer> list, int K) {
 		int s = 0, e = K - 1, ans = Integer.MIN_VALUE;
 		while (e < list.size() || s <= list.size() - K) {
@@ -52,7 +52,7 @@ public class SumArrayOfMaxSum {
 		return ans;
 	}
 
-	//Optimized approach -->Use prefix sum for adding element of subarray
+	//Optimized approach -->Use prefix sum for adding element of subarray TC O(N) in all case SC(N)
 	
 	static int optimizedMaxSumOfArray(List<Integer> list, int K) {
 		List<Integer> prefixSum = new ArrayList<>();
@@ -79,15 +79,39 @@ public class SumArrayOfMaxSum {
 		}
 		return ans;
 	}
+	
+	//Optimized to reduce SC(1) 
+	static int slidingWindowFindMax(List<Integer> list,int K) {
+		int sum=0,ans=Integer.MIN_VALUE;
+		for(int i=0;i<K-1;i++) {  
+			sum+=list.get(i);
+		}
+		int s=1,e=K;
+		while(e<list.size()|| s<=list.size()-K) {
+			sum+=list.get(e)-list.get(s-1);
+			if(sum>ans) {
+				ans=sum;
+			}
+		}
+		return ans;
+		
+	}
+	
 	public static void main(String[] args) {
 
 		List<Integer> list = Arrays.asList(-3, 4, -2, 5, 3, -2, 8, 2, -1, 4);
+		
 		int sum = maximumSumOfSubArray(list, 5);
 		System.out.println("Maximum sum of subarray" + sum);
+		
 		int sum1 = maximumSumOfSubArray1(list, 5);
 		System.out.println("Maixmum sum of subarray with Brute force appraoch" + sum1);
+		
 		int maxsum=optimizedMaxSumOfArray(list,5);
 		System.out.println("Maximum sum of subarray with prefix sum "+maxsum);
+		
+		int maxsum1=slidingWindowFindMax(list,5);
+		System.out.println("Sub array with maximum sum using sliding window approach"+maxsum1);
 		
 	}
 }
