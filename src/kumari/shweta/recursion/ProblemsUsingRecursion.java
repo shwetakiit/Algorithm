@@ -47,6 +47,25 @@ public class ProblemsUsingRecursion {
 		} 
 		return N*factorial(N-1);
 	}
+	//Check String Polindrom using recusrion 
+	static int polindrom(String A) {
+		int l = 0;
+		int r = A.length() - 1;
+
+		int result = isPol(A, l, r);
+		return result;
+
+	}
+
+	static int isPol(String A, int l, int r) {
+		if (l > r) {
+			return 1;
+		}
+		if (A.charAt(l) != A.charAt(r)) {
+			return 0;
+		}
+		return isPol(A, l + 1, r - 1);
+	}
 
 	public static void main(String[] args) {
 		solve(9);
@@ -56,6 +75,7 @@ public class ProblemsUsingRecursion {
 		System.out.println("Nth element of Fibnocii series is "+nthElement);
 		int result=factorial(5);
 		System.out.println("Recusrive factorial"+result);
-
-	}
+		int isPol=polindrom("abbcbba");
+		System.out.println("Is polindrom"+isPol);
+		}
 }
