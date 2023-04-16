@@ -11,44 +11,45 @@ package kumari.shweta.sorting;
  * Output [8,1,3,6,11,2,4,9,7,6]
  */
 public class SortingProblem {
-
-	static void sortSubArray(int A[],int l,int y,int r){
-	int i=l,j=y;
-	int k=0;
-	//Sub array size r-l+1
-	int c[] = new int [r-l+1];
-	while(i<y && j<=r) {
-		if(A[i]<A[j]) {
-			c[k]=A[i];
+	static void sortSubArray(int A[], int l, int y, int r) {
+		int i = l, j = y;
+		int k = 0;
+		// Sub array size r-l+1
+		int c[] = new int[r - l + 1];
+		while (i < y && j <= r) {
+			if (A[i] < A[j]) {
+				c[k] = A[i];
+				i++;
+				k++;
+			} else {
+				c[k] = A[j];
+				j++;
+				k++;
+			}
+		}
+		while (i < y) {
+			c[k] = A[i];
 			i++;
 			k++;
-		} else {
-			c[k]=A[j];
+		}
+		while (j <= r) {
+			c[k] = A[j];
 			j++;
 			k++;
 		}
+		int subIndex = 0;
+		for (i = l; i <= r; i++) {
+			A[i] = c[subIndex];
+			subIndex++;
+		}
+		for (int i1 = 0; i1 < A.length; i1++) {
+			System.out.print(A[i1] + " ");
+		}
+
 	}
-	while(i<y) {
-		c[k]=A[i];
-		i++;k++;
-	}
-	while(j<=r) {
-		c[k]=A[j];
-		j++;k++;
-	}
-	int subIndex=0;
-	for(i=l;i<=r;i++) {
-		A[i]=c[subIndex];
-		subIndex++;
-	}
-	 for(int i1=0;i1<A.length;i1++){
-		 System.out.print(A[i1]+" ");
-	 }
-		
-	}
-	public static void main(String[] args) {
-		int arr[]= {8,1,3,6,11,2,4,9,7,6};
-	    sortSubArray(arr, 2, 5, 7);
-		
+	void main(String[] args) {
+		int arr[] = { 8, 1, 3, 6, 11, 2, 4, 9, 7, 6 };
+		sortSubArray(arr, 2, 5, 7);
+
 	}
 }
