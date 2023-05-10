@@ -91,6 +91,35 @@ public class SingleLinkedListAllFeature {
 			}
 		}
 	}
+	
+	/*
+	 * Case 3 : Insert node at given position 
+	 * Notes:
+	 * In case the position is more than length of linked list, simply insert the
+	 * new node at the tail only. In case the position is 0, simply insert the new node
+	 * at head only. Follow 0-based indexing for the node numbering.
+	 */
+	public void insertNodeAtGivenPosition(int element, int position) {
+		Node node = new Node(element);
+		Node last = head;
+		if (position <= 0) { // Insert node at beginning
+			node.next = last;
+			head = node;
+		} else {
+			int index = 0;
+			while ((index != position - 1) && (last.next != null)) {
+				last = last.next;
+				index++;
+			}
+			if (position - 1 > index) { // insert at end if pos is more than length of list
+				last.next = node;
+			} else {
+				node.next = last.next;
+				last.next = node;
+			}
+		}
+
+	}
 
 	public void deleteFirstNode() {
 		boolean isDeleted;
@@ -174,7 +203,11 @@ public class SingleLinkedListAllFeature {
 		System.out.println("Inserting node before node ");
 		linkedList.insertNodeBeforeAnode(99, 5);
 		linkedList.traversal();
+		System.out.println("Inserting node after node ");
 		linkedList.insertNodeAfterANode(5, 100);
+		linkedList.traversal();
+		System.out.println("Insert node at given position");
+		linkedList.insertNodeAtGivenPosition(100, 3);
 		linkedList.traversal();
 		System.out.println("Deleting node from begning ");
 		linkedList.deleteFirstNode();
