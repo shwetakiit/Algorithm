@@ -175,6 +175,20 @@ public class SingleLinkedListAllFeature {
 
 		}
 	}
+	//Reverse Linked List --> Using recusrion 
+	public void reverseLinkedList() {
+		Node temp = head;
+		printReverse(temp);
+		
+	}
+	
+	private void printReverse(Node temp) {
+		if(temp==null) { //Base case 
+			return;
+		}
+		printReverse(temp.next);
+		System.out.print(temp.data+" ");
+	}
 	
 	// Traversing LinkedList
 	public void traversal() {
@@ -218,6 +232,8 @@ public class SingleLinkedListAllFeature {
 		System.out.println("Delete Node at position ");
 		linkedList.deleteAtPosition(4);
 		linkedList.traversal();
+		System.out.println("Reverse linked list using recursion");
+		linkedList.reverseLinkedList();
 		
 	}
 }
