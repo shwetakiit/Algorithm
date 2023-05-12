@@ -202,6 +202,17 @@ public class SingleLinkedListAllFeature {
 			tNode = tNode.next;
 		}
 	}
+	//Search element in linked list
+	private boolean search(int element) {
+		Node temp = head;
+		while (temp != null) {
+			if (temp.data == element) {
+				return true;
+			}
+			temp = temp.next;
+		}
+		return false;
+	}
 
 	public static void main(String[] args) {
 
@@ -234,6 +245,15 @@ public class SingleLinkedListAllFeature {
 		linkedList.traversal();
 		System.out.println("Reverse linked list using recursion");
 		linkedList.reverseLinkedList();
+		
+		System.out.println("Search element linked list");
+		int element=100;
+		boolean isFound=linkedList.search(element);
+		if(isFound) {
+			System.out.println(element+" is found in linked list");
+		}else {
+			System.out.println(element+" not found in linked list");
+		}
 		
 	}
 }
