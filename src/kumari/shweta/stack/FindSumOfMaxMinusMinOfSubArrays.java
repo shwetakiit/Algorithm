@@ -12,8 +12,10 @@ import java.util.Stack;
 
 /**
  * Find sum of (Max-Min) of all subarrays
- * Input -->  arr[] =[2,5,8] output ->8 
+ * Input -->  arr[] =[2,5,8] output ->8  TC-->O(N) Since we are using stack so SC-> O(N)
  */
+
+
 public class FindSumOfMaxMinusMinOfSubArrays {
 
 	/* Next smaller element in left hand side of input array element */
