@@ -111,6 +111,7 @@ public class TreeTraversalWithoutRecursion {
 	/*
 	 * Preorder Traversal without using recusrion --> Node,Left,Right
 	 */
+	//Approach1
 	static List<Integer> preorderTraversal(TreeNode A) {
 		List<Integer> result = new ArrayList<Integer>();
 		Stack<TreeNode> stack = new Stack();
@@ -128,10 +129,30 @@ public class TreeTraversalWithoutRecursion {
 		}
 		return result;
 	}
-
+   //Approach 2
+	static List<Integer> preorderIterativeTraversal(TreeNode A){
+		
+		List<Integer> result = new ArrayList<Integer>();
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode currentNode = A;
+		while(!stack.isEmpty() || currentNode!=null  ) {
+			while(currentNode!=null) {
+		     	result.add(currentNode.data);
+				stack.push(currentNode);
+				currentNode = currentNode.left;
+			}
+			TreeNode popNode = stack.pop();
+			currentNode = popNode.right;
+			
+		}
+		return result;
+	}
+	
+	
 	/*
 	 * InOrder traversal without using recursion
 	 */
+     //Approach1
 	static List<Integer> inorderTraversal(TreeNode A) {
 		List<Integer> result = new ArrayList<Integer>();
 		Stack<TreeNode> stack = new Stack<>();
@@ -149,7 +170,23 @@ public class TreeTraversalWithoutRecursion {
 		return result;
 
 	}
-
+	
+   //Approach 2
+	static List<Integer> inorderIterativeTraversal(TreeNode A){
+		List<Integer> result = new ArrayList<>();
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode currentNode = A; //Intialize current node with root Node
+		while(!stack.isEmpty()|| currentNode!=null) {
+			while(currentNode!=null) {
+				stack.push(currentNode);
+				currentNode=currentNode.left;
+			}
+			TreeNode popNode=stack.pop();
+			result.add(popNode.data);
+			currentNode=popNode.right;
+		}
+		return result;
+	}
 	public static void main(String[] args) {
 		TreeNode node = new TreeNode(7);
 		node.left = new TreeNode(8);
@@ -163,8 +200,12 @@ public class TreeTraversalWithoutRecursion {
 		node.right.right.right = new TreeNode(17);
 		List<Integer> preOrder = preorderTraversal(node);
 		System.out.println("PreOrder " + preOrder);
+		List<Integer> preOrderList = preorderIterativeTraversal(node);
+		System.out.println("PreOrder Iterative"+preOrder);
 		List<Integer> inOrder = inorderTraversal(node);
 		System.out.println("InOrder " + inOrder);
+		List<Integer> inOrderList = inorderIterativeTraversal(node);
+		System.out.println("InOrder Iterative"+inOrder);
 		List<Integer> resuList = postOrderTraversal(node);
 		System.out.println("Post order " + resuList);
 
