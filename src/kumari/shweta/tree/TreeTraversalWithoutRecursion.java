@@ -1,8 +1,12 @@
 package kumari.shweta.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
+
+import javax.security.auth.x500.X500Principal;
 
 /**
  * @author Shweta Kumari 
@@ -187,6 +191,36 @@ public class TreeTraversalWithoutRecursion {
 		}
 		return result;
 	}
+	
+	//Level Order Traversal
+	public static List<List<Integer>> levelOrderTraversal(TreeNode A) {
+
+		Queue<TreeNode> queue = new LinkedList<>();
+		// Create 2D array list to store all elements of each level
+		List<List<Integer>> result = new ArrayList<>();
+		// Add root node in queue
+		queue.offer(A);
+		while (!queue.isEmpty()) {
+
+			List<Integer> levelNote = new ArrayList<>();
+			int queueSize = queue.size();
+			/**
+			 *  Remove node from queue add in result list and add left and right node of removed element in queue
+			 */
+			for (int i = 0; i < queueSize; i++) {
+				TreeNode removedNode = queue.poll();
+				levelNote.add(removedNode.data);
+				if (removedNode.left != null) {
+					queue.offer(removedNode.left);
+				}
+				if (removedNode.right != null) {
+					queue.offer(removedNode.right);
+				}
+			}
+			result.add(levelNote);
+		}
+		return result;
+	}
 	public static void main(String[] args) {
 		TreeNode node = new TreeNode(7);
 		node.left = new TreeNode(8);
@@ -218,6 +252,9 @@ public class TreeTraversalWithoutRecursion {
 		System.out.println("Height of tree is " + heightOfTree(root));
 		System.out.println("Size of binary tree is " + sizeOfTree(root));
 		System.out.println("Sum of all nodes of Binary tree is " + sumOfAllNode(root));
+		//Level Order traversal 
+		List<List<Integer>> levelOrder = levelOrderTraversal(root);
+		System.out.println("Level order traversal"+levelOrder);
 	}
 
 }
