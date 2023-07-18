@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-import javax.security.auth.x500.X500Principal;
-
 /**
  * @author Shweta Kumari 
  * 2023-02-25
@@ -221,6 +219,59 @@ public class TreeTraversalWithoutRecursion {
 		}
 		return result;
 	}
+	/*Find right view of binary tree ,for example given level order 1,2,3,4,5,6,7,8
+	 * Out put 1,3,7,8
+	 */
+	public static ArrayList<Integer> rightViewOfBinaryTree(TreeNode A) {
+
+		Queue<TreeNode> queue = new LinkedList<>();
+		ArrayList<Integer> result = new ArrayList<>();
+		queue.offer(A);
+		while (!queue.isEmpty()) {
+
+			int queueSize = queue.size();
+			for (int i = 0; i < queueSize; i++) {
+				TreeNode removedNode = queue.poll();
+				if (i == queueSize - 1) {
+					result.add(removedNode.data);
+				}
+				if (removedNode.left != null) {
+					queue.offer(removedNode.left);
+				}
+				if (removedNode.right != null) {
+					queue.offer(removedNode.right);
+				}
+			}
+		}
+		return result;
+	}
+
+	/*Find left view of binary tree ,for example given level order 1,2,3,4,5,6,7,8
+	 * Out put 1,3,7,8
+	 */
+	 public static ArrayList<Integer> leftViewOfBinaryTree(TreeNode A) {
+	        Queue<TreeNode> queue = new LinkedList<>();
+	        ArrayList<Integer> result= new ArrayList<>();
+	        queue.offer(A); 
+	        while(!queue.isEmpty()){
+	           
+	            int queueSize = queue.size();
+	            for(int i =0;i<queueSize;i++){
+	                TreeNode removedNode = queue.poll();
+	                if(i==0){
+	                result.add(removedNode.data);
+	                }
+	                if(removedNode.left!=null){
+	                    queue.offer(removedNode.left);
+	                } 
+	                if(removedNode.right!=null){
+	                    queue.offer(removedNode.right);
+	                }
+	            }
+
+	        }
+	       return result;
+	 }
 	public static void main(String[] args) {
 		TreeNode node = new TreeNode(7);
 		node.left = new TreeNode(8);
@@ -255,6 +306,13 @@ public class TreeTraversalWithoutRecursion {
 		//Level Order traversal 
 		List<List<Integer>> levelOrder = levelOrderTraversal(root);
 		System.out.println("Level order traversal"+levelOrder);
+		
+		//Right view of binary tree
+		List<Integer> rightView = rightViewOfBinaryTree(root);
+		System.out.println("Right view of binary tree is "+rightView);
+		//Left view of binary tree
+		List<Integer> leftView = leftViewOfBinaryTree(root);
+		System.out.println("Left view of binary tree is "+leftView);		
 	}
 
 }
