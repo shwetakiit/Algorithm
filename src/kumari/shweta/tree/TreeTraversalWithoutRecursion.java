@@ -1,10 +1,19 @@
 package kumari.shweta.tree;
 
+import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
+
+import javax.crypto.interfaces.DHPublicKey;
+import javax.naming.spi.DirStateFactory.Result;
+
+import org.graalvm.compiler.graph.Graph.NodeEvent;
+
 
 /**
  * @author Shweta Kumari 
@@ -39,6 +48,14 @@ class TreeNode {
 	}
 }
 
+class Pair{
+	public int level;
+	public TreeNode treeNode;
+	public Pair(TreeNode treeNode,int level) {
+		this.level = level;
+		this.treeNode = treeNode;
+	}
+}
 public class TreeTraversalWithoutRecursion {
 
 	static int sum(TreeNode node) {
@@ -272,6 +289,56 @@ public class TreeTraversalWithoutRecursion {
 	        }
 	       return result;
 	 }
+	 /**
+	  * Find vertical order traversal of binary tree 
+	  * Input given preorder --> 1,2,5,6,14,15,16,8,3,10,9,7,13,4,12,11
+	  * Out put  -- 6 , 5 14, 2 9 15 , 1 8 10 12 16, 3 7 4 , 13 11
+	  */
+	 public static List<List<Integer>> verticalOrderTraversal(TreeNode A){
+		 List<List<Integer>> result = new ArrayList<>();
+		 Queue<Pair> queue = new LinkedList<>();
+		 Pair rooPair = new Pair(A,0);
+		 Map<Integer, List<Integer>> map = new HashMap<>();
+		 int min=0 ,max=0;
+		 queue.offer(rooPair);
+		 while(!queue.isEmpty()) {
+			 
+			 //Remove root node from queue
+			 Pair removePair = queue.poll();
+			 
+			 // Map keep record for printing data of vertical traversal -Key- level value --> list of data at same level
+			 if(map.containsKey(removePair.level)) {
+				List<Integer> list  = map.get(removePair.level);
+				list.add(removePair.treeNode.data);
+			 } else {
+				List<Integer> list = new  ArrayList<>();
+				list.add(removePair.treeNode.data);
+				map.put(removePair.level, list);
+			 }
+			
+			 min=Math.min(min,removePair.level);
+			 max=Math.max(max,removePair.level);
+			 
+			 //Add left Node in Queue 
+			 if(removePair.treeNode.left!=null) {
+				 Pair leftNode = new Pair(removePair.treeNode.left,removePair.level-1);
+				 queue.offer(leftNode);
+			 }
+			 //Add right Node in Queue 
+			 if(removePair.treeNode.right!=null) {
+				 Pair rightNode = new Pair(removePair.treeNode.right,removePair.level+1);
+				 queue.offer(rightNode);
+			 }
+			
+		 }
+		 for(int i=min;i<=max;i++) {
+			List<Integer> list = map.get(i);
+			result.add(list);
+			
+		 }
+		 
+		 return result;
+	 }
 	public static void main(String[] args) {
 		TreeNode node = new TreeNode(7);
 		node.left = new TreeNode(8);
@@ -312,7 +379,29 @@ public class TreeTraversalWithoutRecursion {
 		System.out.println("Right view of binary tree is "+rightView);
 		//Left view of binary tree
 		List<Integer> leftView = leftViewOfBinaryTree(root);
-		System.out.println("Left view of binary tree is "+leftView);		
+		System.out.println("Left view of binary tree is "+leftView);
+		
+		//Vertical traversal of Binary tree
+		TreeNode node2 = new TreeNode(1);
+		node2.left = new TreeNode(2);
+		node2.left.left = new TreeNode(5);
+        node2.left.left.left = new TreeNode(6);
+	    node2.left.left.left.right = new TreeNode(14);
+	    node2.left.left.left.right.right = new TreeNode(15);
+	    node2.left.left.left.right.right.right = new TreeNode(16);
+	    node2.left.right = new TreeNode(8);
+	     
+	     node2.right= new TreeNode(3);
+	     node2.right.left = new TreeNode(10);
+	     node2.right.left.left = new TreeNode(9);
+	     node2.right.left.right= new TreeNode(7);
+	     
+	     node2.right.right = new TreeNode(13);
+	     node2.right.right.left = new TreeNode(4);
+	     node2.right.right.left.left= new TreeNode(12);
+	     node2.right.right.left.right = new TreeNode(11);	
+		 List<List<Integer>> verticalTrList = verticalOrderTraversal(node2);
+		 System.out.println("Vertical order trvaersal "+verticalTrList);
+		
 	}
-
 }
