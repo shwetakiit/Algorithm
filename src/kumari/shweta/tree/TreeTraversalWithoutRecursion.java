@@ -1,6 +1,5 @@
 package kumari.shweta.tree;
 
-import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -8,12 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-
-import javax.crypto.interfaces.DHPublicKey;
-import javax.naming.spi.DirStateFactory.Result;
-
-import org.graalvm.compiler.graph.Graph.NodeEvent;
-
 
 /**
  * @author Shweta Kumari 
@@ -339,6 +332,110 @@ public class TreeTraversalWithoutRecursion {
 		 
 		 return result;
 	 }
+	 /**
+	  * Find top view of binary tree 
+	  * Input given preorder --> 1,2,5,6,14,15,16,8,3,10,9,7,13,4,12,11
+	  * Output  -- 6,5,2,1,3,13,20
+	  * @param A
+	  * @return
+	  */
+	 public static List<Integer> topViewOfBinaryTree(TreeNode A){
+		 List<Integer> result = new ArrayList<>();
+		 Queue<Pair> queue = new LinkedList<>();
+		 Pair rooPair = new Pair(A,0);
+		 Map<Integer, List<Integer>> map = new HashMap<>();
+		 int min=0 ,max=0;
+		 queue.offer(rooPair);
+		 while(!queue.isEmpty()) {
+			 
+			 //Remove root node from queue
+			 Pair removePair = queue.poll();
+			 
+			 // Map keep record for printing data of vertical traversal -Key- level value --> list of data at same level
+			 if(map.containsKey(removePair.level)) {
+				List<Integer> list  = map.get(removePair.level);
+				list.add(removePair.treeNode.data);
+			 } else {
+				List<Integer> list = new  ArrayList<>();
+				list.add(removePair.treeNode.data);
+				map.put(removePair.level, list);
+			 }
+			
+			 min=Math.min(min,removePair.level);
+			 max=Math.max(max,removePair.level);
+			 
+			 //Add left Node in Queue 
+			 if(removePair.treeNode.left!=null) {
+				 Pair leftNode = new Pair(removePair.treeNode.left,removePair.level-1);
+				 queue.offer(leftNode);
+			 }
+			 //Add right Node in Queue 
+			 if(removePair.treeNode.right!=null) {
+				 Pair rightNode = new Pair(removePair.treeNode.right,removePair.level+1);
+				 queue.offer(rightNode);
+			 }
+			
+		 }
+		 //Find first element of list which has stored in map of key as level[-3,-2,-1,0,1,2] and value is list of element at same level
+		 for(int i=min;i<=max;i++) {
+			List<Integer> list = map.get(i);
+			result.add(list.get(0));
+			
+		 }
+		 
+		 return result;
+	 }
+	 
+	 public static List<Integer> bottomViewOfBinaryTree(TreeNode A){
+		 List<Integer> result = new ArrayList<>();
+		 Queue<Pair> queue = new LinkedList<>();
+		 Pair rooPair = new Pair(A,0);
+		 Map<Integer, List<Integer>> map = new HashMap<>();
+		 int min=0 ,max=0;
+		 queue.offer(rooPair);
+		 while(!queue.isEmpty()) {
+			 
+			 //Remove root node from queue
+			 Pair removePair = queue.poll();
+			 
+			 // Map keep record for printing data of vertical traversal -Key- level value --> list of data at same level
+			 if(map.containsKey(removePair.level)) {
+				List<Integer> list  = map.get(removePair.level);
+				list.add(removePair.treeNode.data);
+			 } else {
+				List<Integer> list = new  ArrayList<>();
+				list.add(removePair.treeNode.data);
+				map.put(removePair.level, list);
+			 }
+			
+			 min=Math.min(min,removePair.level);
+			 max=Math.max(max,removePair.level);
+			 
+			 //Add left Node in Queue 
+			 if(removePair.treeNode.left!=null) {
+				 Pair leftNode = new Pair(removePair.treeNode.left,removePair.level-1);
+				 queue.offer(leftNode);
+			 }
+			 //Add right Node in Queue 
+			 if(removePair.treeNode.right!=null) {
+				 Pair rightNode = new Pair(removePair.treeNode.right,removePair.level+1);
+				 queue.offer(rightNode);
+			 }
+			
+		 }
+		 /**
+		  * Find last element of list which has stored in map of key as level[-3,-2,-1,0,1,2] and value is list of
+		  * element at same level for bottom view .
+		  */
+		 for(int i=min;i<=max;i++) {
+			List<Integer> list = map.get(i);
+			result.add(list.get(list.size()-1));
+			
+		 }
+		 
+		 return result;
+	 }
+	 
 	public static void main(String[] args) {
 		TreeNode node = new TreeNode(7);
 		node.left = new TreeNode(8);
@@ -402,6 +499,13 @@ public class TreeTraversalWithoutRecursion {
 	     node2.right.right.left.right = new TreeNode(11);	
 		 List<List<Integer>> verticalTrList = verticalOrderTraversal(node2);
 		 System.out.println("Vertical order trvaersal "+verticalTrList);
+		 //Top view of binary tree
+		 List<Integer> topViewList = topViewOfBinaryTree(node2);
+		 System.out.println("Top view elements of binary tree"+topViewList);
+		 //Bottom view of binary tree
+		 List<Integer> bottomViewList = bottomViewOfBinaryTree(node2);
+		 System.out.println("Bottom view elements of binary tree"+bottomViewList);
 		
+		 
 	}
 }
