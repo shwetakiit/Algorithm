@@ -50,7 +50,8 @@ class Pair{
 	}
 }
 public class TreeTraversalWithoutRecursion {
-
+	
+	 public static int isBalanced =1; //Let's assume tree is balanced tree
 	static int sum(TreeNode node) {
 		if (node == null) {
 			return 0;
@@ -435,7 +436,30 @@ public class TreeTraversalWithoutRecursion {
 		 
 		 return result;
 	 }
+	 /**
+	  * Check tree is balanced  tree or not ,If tree is balanced tree return 1 otherwise return 0.
+	  * @param args
+	  */
+	 public static int checkBalanceTree(TreeNode node) {
+	    heightOfBinaryTree(node);
+		 return isBalanced;
+	 }
 	 
+	/**
+	 * @param node
+	 */
+	private static int heightOfBinaryTree(TreeNode node) {
+		if(node== null) {
+			return -1;
+		}
+		int lh= heightOfBinaryTree(node.left);
+		int rh= heightOfBinaryTree(node.right);
+		if(Math.abs(lh-rh)>1) {
+			isBalanced=0;
+		}
+		return Math.max(lh, rh)+1;
+	}
+
 	public static void main(String[] args) {
 		TreeNode node = new TreeNode(7);
 		node.left = new TreeNode(8);
@@ -499,13 +523,22 @@ public class TreeTraversalWithoutRecursion {
 	     node2.right.right.left.right = new TreeNode(11);	
 		 List<List<Integer>> verticalTrList = verticalOrderTraversal(node2);
 		 System.out.println("Vertical order trvaersal "+verticalTrList);
+		 
 		 //Top view of binary tree
 		 List<Integer> topViewList = topViewOfBinaryTree(node2);
 		 System.out.println("Top view elements of binary tree"+topViewList);
+		 
 		 //Bottom view of binary tree
 		 List<Integer> bottomViewList = bottomViewOfBinaryTree(node2);
 		 System.out.println("Bottom view elements of binary tree"+bottomViewList);
 		
-		 
-	}
+		 //Check tree is balanced tree or not		
+		 int isBalancedTree= checkBalanceTree(node2);
+		 if(isBalancedTree==1) {
+			 System.out.println("Tree is balanced tree");
+		 } else {
+			 System.out.println("Tree is not balanced tree");
+		 }
+		
+	  }
 }
