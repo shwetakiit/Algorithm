@@ -15,6 +15,9 @@ package kumari.shweta.tree;
 	}
 }*/
 public class BinarySearchTree {
+	 boolean isBST;
+	TreeNode prev=null;
+	TreeNode current=null;
 
 	/**
 	 * Find given element in Binary search tree , if element found return 1 else
@@ -128,6 +131,9 @@ public class BinarySearchTree {
 		}
 	}
 
+	/**
+	 * Delete node which has both child
+	 */
 	public static TreeNode deleteNodeHasBothChild(TreeNode temp) {
 		TreeNode successorParent = temp; // temp is target node , which will be deleted
 		TreeNode successor = temp.left;
@@ -174,6 +180,34 @@ public class BinarySearchTree {
 		System.out.print("\t" + root.data);
 		inOrderTraversal(root.right);
 	}
+	/**
+	 * Validate binary search tree
+	 * @param root
+	 */
+	public  void  validateBST(TreeNode root) {
+	   isBST=true;
+       checkBST(root);
+       if(isBST) {
+    	   System.out.println("Tree is binary search tree");
+       } else {
+    	   System.out.println("Tree is not binary search tree");
+       }
+		
+		
+	}
+	public void checkBST(TreeNode A){ //Inorder traversal LNR
+		 if(A==null){
+		     return ;
+		 }
+		  checkBST(A.left);//Left Node
+		  prev=current;
+		  current=A;
+		  if(prev!=null && current!=null && prev.data>=current.data){
+		      isBST=false;
+		  }
+		  checkBST(A.right);  //Right Node
+
+		}
 
 	public static void main(String[] args) {
 
@@ -218,6 +252,15 @@ public class BinarySearchTree {
 		TreeNode resuNode = deleteNodeFromBST(node, 13);
 		System.out.println("\n After deletion of node from BST tree in inorder is ");
 		inOrderTraversal(resuNode);
+		
+		//Validate BST tree 
+		 BinarySearchTree obj = new BinarySearchTree();
+		 obj.validateBST(node);
+		 TreeNode node1= new TreeNode(1);
+		 node1.left = new TreeNode(2);
+		 node1.right = new TreeNode(3);
+		 obj.validateBST(node1);
+		 
 	}
 
 }
