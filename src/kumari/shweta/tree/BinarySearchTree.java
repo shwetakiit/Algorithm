@@ -4,6 +4,9 @@
  */
 package kumari.shweta.tree;
 
+import java.util.Arrays;
+import java.util.List;
+
 /*class TreeNode{
 	int data;
 	TreeNode left;
@@ -209,6 +212,34 @@ public class BinarySearchTree {
 
 		}
 
+		/**Given an array where elements are sorted in ascending order, convert it to a height Balanced Binary Search Tree (BBST).
+         *Balanced tree : a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+		 * 
+		 * @param args
+		 */
+		private static TreeNode buildBST(List<Integer> sortedList) {
+			TreeNode rootNode = createHeightBalancedTree(sortedList, 0, sortedList.size() - 1);
+			return rootNode;
+
+		}
+
+		private static TreeNode createHeightBalancedTree(List<Integer> sortedList, int startIndex, int endIndex) {
+
+			if (startIndex > endIndex) { // Base case
+				return null;
+			}
+			if (startIndex == endIndex) { // If only one node is available
+				TreeNode root = new TreeNode(sortedList.get(startIndex));
+				return root;
+			}
+			int mid = (startIndex + endIndex) / 2;
+
+			TreeNode root = new TreeNode(sortedList.get(mid));
+			root.left = createHeightBalancedTree(sortedList, startIndex, mid - 1);
+			root.right = createHeightBalancedTree(sortedList, mid + 1, endIndex);
+			return root;
+		}
+
 	public static void main(String[] args) {
 
 		// Create binary search tree
@@ -261,6 +292,11 @@ public class BinarySearchTree {
 		 node1.right = new TreeNode(3);
 		 obj.validateBST(node1);
 		 
+		 //Created Height Balanced Tree 
+		 
+		 List<Integer> sortedList = Arrays.asList(1,2,3,4,5);
+		 TreeNode rootNode= buildBST(sortedList);
+		 System.out.println("Root node if created height balanced tree is "+rootNode.data);
 	}
 
 }
