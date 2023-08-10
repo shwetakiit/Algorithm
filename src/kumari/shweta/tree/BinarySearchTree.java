@@ -4,8 +4,10 @@
  */
 package kumari.shweta.tree;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 /*class TreeNode{
 	int data;
@@ -240,6 +242,61 @@ public class BinarySearchTree {
 			return root;
 		}
 
+		/**
+		 * Find nth Smallest element from binary search tree
+		 * 
+		 * @param args
+		 */
+		// Approach 1 : Traverse in inorder(LNR) --which gives us sorted array TC O(N)
+		// SC O(N)
+		public static Integer findNthSmallestNodeFromBST(TreeNode root, int smallest) {
+
+			List<Integer> inorderList = new ArrayList<>();
+			inOrder(root, inorderList);
+			if (smallest <= inorderList.size()) {
+				return inorderList.get(smallest - 1);
+			}
+			return null;
+
+		}
+
+		private static List<Integer> inOrder(TreeNode root, List<Integer> inorderList) {
+			if (root == null) {
+				return inorderList;
+			}
+			inOrder(root.left, inorderList);
+			inorderList.add(root.data);
+			inOrder(root.right, inorderList);
+			return inorderList;
+
+		}
+
+		// Approach 2 --> On the fly try to maintain count --Need to check 
+		public static Integer findNthSmallest(TreeNode root, int smallest) {
+			int result = 0, count = 0;
+			result = inOrderTraversal(root, smallest, count, result);
+			return result;
+		}
+
+		/**
+		 * @param root
+		 * @param smallest
+		 * @return
+		 */
+		private static int inOrderTraversal(TreeNode root, int smallest, int count, int result) {
+
+			if (root == null) {
+				return result;
+			}
+			inOrderTraversal(root.left, smallest, count, result);
+			count++;
+			if (smallest == count) {
+				result = root.data;
+			}
+			inOrderTraversal(root.right, smallest, count, result);
+			return result;
+		}
+
 	public static void main(String[] args) {
 
 		// Create binary search tree
@@ -297,6 +354,13 @@ public class BinarySearchTree {
 		 List<Integer> sortedList = Arrays.asList(1,2,3,4,5);
 		 TreeNode rootNode= buildBST(sortedList);
 		 System.out.println("Root node if created height balanced tree is "+rootNode.data);
+
+			// Find nth Smallest element from Binary search tree
+			Integer smallestNode = findNthSmallestNodeFromBST(node, 4);
+			System.out.println("Smallest element is " + smallestNode);
+			Integer smallestData = findNthSmallest(node, 4);
+			System.out.println("Samllest element is " + smallestData);
+		 
 	}
 
 }
