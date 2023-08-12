@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 /*class TreeNode{
 	int data;
 	TreeNode left;
@@ -20,9 +19,12 @@ import java.util.List;
 	}
 }*/
 public class BinarySearchTree {
-	 boolean isBST;
-	TreeNode prev=null;
-	TreeNode current=null;
+	boolean isBST;
+	TreeNode prev = null;
+	TreeNode current = null;
+
+	public static int COUNT = 0;
+	public static TreeNode SMALLEST_NODE;
 
 	/**
 	 * Find given element in Binary search tree , if element found return 1 else
@@ -185,117 +187,123 @@ public class BinarySearchTree {
 		System.out.print("\t" + root.data);
 		inOrderTraversal(root.right);
 	}
+
 	/**
 	 * Validate binary search tree
+	 * 
 	 * @param root
 	 */
-	public  void  validateBST(TreeNode root) {
-	   isBST=true;
-       checkBST(root);
-       if(isBST) {
-    	   System.out.println("Tree is binary search tree");
-       } else {
-    	   System.out.println("Tree is not binary search tree");
-       }
-		
-		
+	public void validateBST(TreeNode root) {
+		isBST = true;
+		checkBST(root);
+		if (isBST) {
+			System.out.println("Tree is binary search tree");
+		} else {
+			System.out.println("Tree is not binary search tree");
+		}
+
 	}
-	public void checkBST(TreeNode A){ //Inorder traversal LNR
-		 if(A==null){
-		     return ;
-		 }
-		  checkBST(A.left);//Left Node
-		  prev=current;
-		  current=A;
-		  if(prev!=null && current!=null && prev.data>=current.data){
-		      isBST=false;
-		  }
-		  checkBST(A.right);  //Right Node
 
+	public void checkBST(TreeNode A) { // Inorder traversal LNR
+		if (A == null) {
+			return;
 		}
-
-		/**Given an array where elements are sorted in ascending order, convert it to a height Balanced Binary Search Tree (BBST).
-         *Balanced tree : a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
-		 * 
-		 * @param args
-		 */
-		private static TreeNode buildBST(List<Integer> sortedList) {
-			TreeNode rootNode = createHeightBalancedTree(sortedList, 0, sortedList.size() - 1);
-			return rootNode;
-
+		checkBST(A.left);// Left Node
+		prev = current;
+		current = A;
+		if (prev != null && current != null && prev.data >= current.data) {
+			isBST = false;
 		}
+		checkBST(A.right); // Right Node
 
-		private static TreeNode createHeightBalancedTree(List<Integer> sortedList, int startIndex, int endIndex) {
+	}
 
-			if (startIndex > endIndex) { // Base case
-				return null;
-			}
-			if (startIndex == endIndex) { // If only one node is available
-				TreeNode root = new TreeNode(sortedList.get(startIndex));
-				return root;
-			}
-			int mid = (startIndex + endIndex) / 2;
+	/**
+	 * Given an array where elements are sorted in ascending order, convert it to a
+	 * height Balanced Binary Search Tree (BBST). Balanced tree : a height-balanced
+	 * binary tree is defined as a binary tree in which the depth of the two
+	 * subtrees of every node never differ by more than 1.
+	 * 
+	 * @param args
+	 */
+	private static TreeNode buildBST(List<Integer> sortedList) {
+		TreeNode rootNode = createHeightBalancedTree(sortedList, 0, sortedList.size() - 1);
+		return rootNode;
 
-			TreeNode root = new TreeNode(sortedList.get(mid));
-			root.left = createHeightBalancedTree(sortedList, startIndex, mid - 1);
-			root.right = createHeightBalancedTree(sortedList, mid + 1, endIndex);
+	}
+
+	private static TreeNode createHeightBalancedTree(List<Integer> sortedList, int startIndex, int endIndex) {
+
+		if (startIndex > endIndex) { // Base case
+			return null;
+		}
+		if (startIndex == endIndex) { // If only one node is available
+			TreeNode root = new TreeNode(sortedList.get(startIndex));
 			return root;
 		}
+		int mid = (startIndex + endIndex) / 2;
 
-		/**
-		 * Find nth Smallest element from binary search tree
-		 * 
-		 * @param args
-		 */
-		// Approach 1 : Traverse in inorder(LNR) --which gives us sorted array TC O(N)
-		// SC O(N)
-		public static Integer findNthSmallestNodeFromBST(TreeNode root, int smallest) {
+		TreeNode root = new TreeNode(sortedList.get(mid));
+		root.left = createHeightBalancedTree(sortedList, startIndex, mid - 1);
+		root.right = createHeightBalancedTree(sortedList, mid + 1, endIndex);
+		return root;
+	}
 
-			List<Integer> inorderList = new ArrayList<>();
-			inOrder(root, inorderList);
-			if (smallest <= inorderList.size()) {
-				return inorderList.get(smallest - 1);
-			}
-			return null;
+	/**
+	 * Find nth Smallest element from binary search tree
+	 * 
+	 * @param args
+	 */
+	// Approach 1 : Traverse in inorder(LNR) --which gives us sorted array TC O(N)
+	// SC O(N)
+	public static Integer findNthSmallestNodeFromBST(TreeNode root, int smallest) {
 
+		List<Integer> inorderList = new ArrayList<>();
+		inOrder(root, inorderList);
+		if (smallest <= inorderList.size()) {
+			return inorderList.get(smallest - 1);
 		}
+		return null;
 
-		private static List<Integer> inOrder(TreeNode root, List<Integer> inorderList) {
-			if (root == null) {
-				return inorderList;
-			}
-			inOrder(root.left, inorderList);
-			inorderList.add(root.data);
-			inOrder(root.right, inorderList);
+	}
+
+	private static List<Integer> inOrder(TreeNode root, List<Integer> inorderList) {
+		if (root == null) {
 			return inorderList;
-
 		}
+		inOrder(root.left, inorderList);
+		inorderList.add(root.data);
+		inOrder(root.right, inorderList);
+		return inorderList;
 
-		// Approach 2 --> On the fly try to maintain count --Need to check 
-		public static Integer findNthSmallest(TreeNode root, int smallest) {
-			int result = 0, count = 0;
-			result = inOrderTraversal(root, smallest, count, result);
-			return result;
+	}
+
+	// Approach 2 --> On the fly try to maintain count --Need to check
+	public static TreeNode findNthSmallest(TreeNode root, int smallest) {
+
+		TreeNode result = inOrderTraversal(root, smallest);
+		return result;
+	}
+
+	/**
+	 * @param root
+	 * @param smallest
+	 * @return
+	 */
+	private static TreeNode inOrderTraversal(TreeNode root, int smallest) {
+
+		if (root == null) {
+			return SMALLEST_NODE;
 		}
-
-		/**
-		 * @param root
-		 * @param smallest
-		 * @return
-		 */
-		private static int inOrderTraversal(TreeNode root, int smallest, int count, int result) {
-
-			if (root == null) {
-				return result;
-			}
-			inOrderTraversal(root.left, smallest, count, result);
-			count++;
-			if (smallest == count) {
-				result = root.data;
-			}
-			inOrderTraversal(root.right, smallest, count, result);
-			return result;
+		inOrderTraversal(root.left, smallest);
+		COUNT++;
+		if (smallest == COUNT) {
+			SMALLEST_NODE = root;
+			return SMALLEST_NODE;
 		}
+		return inOrderTraversal(root.right, smallest);
+
+	}
 
 	public static void main(String[] args) {
 
@@ -340,27 +348,39 @@ public class BinarySearchTree {
 		TreeNode resuNode = deleteNodeFromBST(node, 13);
 		System.out.println("\n After deletion of node from BST tree in inorder is ");
 		inOrderTraversal(resuNode);
-		
-		//Validate BST tree 
-		 BinarySearchTree obj = new BinarySearchTree();
-		 obj.validateBST(node);
-		 TreeNode node1= new TreeNode(1);
-		 node1.left = new TreeNode(2);
-		 node1.right = new TreeNode(3);
-		 obj.validateBST(node1);
-		 
-		 //Created Height Balanced Tree 
-		 
-		 List<Integer> sortedList = Arrays.asList(1,2,3,4,5);
-		 TreeNode rootNode= buildBST(sortedList);
-		 System.out.println("Root node if created height balanced tree is "+rootNode.data);
 
-			// Find nth Smallest element from Binary search tree
-			Integer smallestNode = findNthSmallestNodeFromBST(node, 4);
-			System.out.println("Smallest element is " + smallestNode);
-			Integer smallestData = findNthSmallest(node, 4);
-			System.out.println("Samllest element is " + smallestData);
-		 
-	}
+		// Validate BST tree
+		BinarySearchTree obj = new BinarySearchTree();
+		obj.validateBST(node);
+		TreeNode node1 = new TreeNode(1);
+		node1.left = new TreeNode(2);
+		node1.right = new TreeNode(3);
+		obj.validateBST(node1);
+
+		// Created Height Balanced Tree
+
+		List<Integer> sortedList = Arrays.asList(1, 2, 3, 4, 5);
+		TreeNode rootNode = buildBST(sortedList);
+		System.out.println("Root node if created height balanced tree is " + rootNode.data);
+
+		// Find nth Smallest element from Binary search tree
+
+		// Approach 1
+		Integer smallestNode = findNthSmallestNodeFromBST(node, 4);
+		System.out.println("Smallest element is " + smallestNode);
+
+		// Approach 2
+		// Negative scenarios with node2
+		TreeNode node2 = null; // case 1 -If root node is null
+		node2 = new TreeNode(8);
+		node2.left = new TreeNode(4);// case 2 If total no of node in BST tree is less than nth smallest
+		// Positive scenario with node
+		TreeNode smallestNode1 = findNthSmallest(node, 4);
+		if (smallestNode1 != null) {
+			System.out.println("Samllest element is " + smallestNode1.data);
+		} else {
+			System.out.println("Either BST tree has no node or there is no node at nth samllest position in BST");
+		}
+     }
 
 }
