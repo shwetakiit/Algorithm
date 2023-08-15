@@ -4,6 +4,14 @@
  */
 package kumari.shweta.tree;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+
+
+
 public class BinaryTree {
 
 	public static boolean findNodeInBinaryTree(TreeNode root, int element) {
@@ -18,7 +26,33 @@ public class BinaryTree {
 		return findNodeInBinaryTree(root.left, element) || findNodeInBinaryTree(root.right, element);
 
 	}
+	
+	/**
+	 * Find path from root node to the searched element in Binary tree .
+	 * Example search 25 in given Binary tree so path of 25 from root is  [6, 8, 29, 20, 23, 25]
+	 * @param root
+	 * @param element
+	 * @param result
+	 * @return
+	 */
+	public static boolean findPathOfSearchingElement(TreeNode root, int element, List<Integer> result) {
 
+		if (root == null) {
+			return false;
+		}
+		if (root.data == element) {
+			result.add(root.data);
+			return true;
+		}
+		boolean isFound = findPathOfSearchingElement(root.left, element, result)
+				|| findPathOfSearchingElement(root.right, element, result);
+		if (isFound) {
+			result.add(root.data);
+		}
+		return isFound;
+	}
+
+	
 	public static void main(String[] args) {
 
 		TreeNode node = new TreeNode(6);
@@ -46,5 +80,12 @@ public class BinaryTree {
 		} else {
 			System.out.println("Element is not found in binary tree");
 		}
+		
+		List<Integer> result = new ArrayList<>();
+		findPathOfSearchingElement(node, 25, result);
+		// Reverse the list to get path of searched element from root Node
+		Collections.reverse(result);
+		System.out.println("Path of searched element is  " + result);
+		
 	}
 }
