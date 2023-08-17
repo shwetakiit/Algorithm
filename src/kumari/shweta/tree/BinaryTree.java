@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
-
-
 public class BinaryTree {
 
 	public static boolean findNodeInBinaryTree(TreeNode root, int element) {
@@ -52,6 +48,51 @@ public class BinaryTree {
 		return isFound;
 	}
 
+	/**
+	 * Find Least Common Ancestor of given two elements in Binary tree
+	 * Example in given binary tree  LCA(47,35) --Output is 29, 29 is least common ancestor of 47 and 35.
+	 * TC -->O(N) SC -O(H) H --> height of binary tree 
+	 * @param args
+	 */
+	public static int findCommonAncestor(TreeNode root, int B, int C) {
+		int result = -1;
+		List<Integer> pathA = new ArrayList<>();
+		List<Integer> pathB = new ArrayList<>();
+		findPath(root, B, pathA);
+		findPath(root, C, pathB);
+		Collections.reverse(pathA);
+		Collections.reverse(pathB);
+		int size = 0;
+		if (pathA.size() < pathB.size()) {
+			size = pathA.size();
+		} else {
+			size = pathB.size();
+		}
+		for (int i = 0; i < size; i++) {
+			if (pathA.get(i).equals(pathB.get(i))) {
+				result = pathA.get(i);
+			} else {
+				break;
+			}
+		}
+		return result;
+
+	}
+	
+	  static boolean findPath(TreeNode root,int element,List<Integer> pathElements){
+	        if(root==null){
+	            return false;
+	        }
+	        if(root.data==element){
+	            pathElements.add(root.data);
+	            return true;
+	        }
+	        boolean isFound=findPath(root.left,element,pathElements)||findPath(root.right,element,pathElements);
+	        if(isFound){
+	            pathElements.add(root.data);
+	        }
+	        return isFound;
+	    }
 	
 	public static void main(String[] args) {
 
@@ -86,6 +127,10 @@ public class BinaryTree {
 		// Reverse the list to get path of searched element from root Node
 		Collections.reverse(result);
 		System.out.println("Path of searched element is  " + result);
+		// Find common ancestor of given two node
+		int commonAncestor = findCommonAncestor(node, 47, 35);
+		System.out.println("Common ancestor is " + commonAncestor);
+		
 		
 	}
 }
