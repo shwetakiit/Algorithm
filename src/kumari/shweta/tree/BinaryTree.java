@@ -79,6 +79,7 @@ public class BinaryTree {
 
 	}
 	
+	
 	  static boolean findPath(TreeNode root,int element,List<Integer> pathElements){
 	        if(root==null){
 	            return false;
@@ -94,6 +95,38 @@ public class BinaryTree {
 	        return isFound;
 	    }
 	
+	  
+	    /**
+		 * Given a Binary Search Tree A. Also given are two nodes B and C. Find the lowest common ancestor of the two nodes.
+         *Note 1 :- It is guaranteed that the nodes B and C exist.
+         *Note 2 :- The LCA of B and C in A is the shared ancestor of B and C that is located farthest from the root.
+		 * Note3:- All node in BST are distinct 
+		 * LCA(12,50) --> Out put is 15 
+		 * TC --> O(H) , SC--> O(1)
+		 * @param root
+		 * @param B
+		 * @param C
+		 * @return
+		 */
+		public static int findCommonAncestorInBST(TreeNode root,int B,int C) {
+			
+			TreeNode current = root;
+			while(true) {
+				
+				if(B>current.data && C>current.data) {//A and B are greater than root node go right of BST
+					
+					current = current.right;
+				} else if(B<current.data && C<current.data) {//A and B are less than root node got left of BST 
+					
+					current = current.left;
+				} else {// If A is greater than root but B is less than root and vice versa
+					
+					break;
+				}
+			}
+			return current.data;
+			
+		}
 	public static void main(String[] args) {
 
 		TreeNode node = new TreeNode(6);
@@ -127,10 +160,26 @@ public class BinaryTree {
 		// Reverse the list to get path of searched element from root Node
 		Collections.reverse(result);
 		System.out.println("Path of searched element is  " + result);
-		// Find common ancestor of given two node
+		// Find common ancestor of given two node in Binary tree
 		int commonAncestor = findCommonAncestor(node, 47, 35);
 		System.out.println("Common ancestor is " + commonAncestor);
-		
+		// Find common ancestor of given two node in Binary search tree
+
+		TreeNode root = new TreeNode(11);
+		root.left = new TreeNode(8);
+		root.right = new TreeNode(15);
+		root.left.left = new TreeNode(3);
+		root.left.right = new TreeNode(9);
+		root.left.left.left = new TreeNode(-1);
+		root.right.left = new TreeNode(13);
+		TreeNode secondRight = root.right.right = new TreeNode(19);
+		root.right.left.left = new TreeNode(12);
+		root.right.left.right = new TreeNode(14);
+		secondRight.right = new TreeNode(25);
+		secondRight.right.right = new TreeNode(50);
+
+		int bstCommonAncestor = findCommonAncestorInBST(root, 12, 50);
+		System.out.println("Least common ancestor in BST is " + bstCommonAncestor);
 		
 	}
 }
