@@ -6,9 +6,14 @@ package kumari.shweta.tree;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BinaryTree {
+	
+	static int time=0;
+	static Map<Integer,List<Integer>> nodeInOutTimeMap = new HashMap<>();
 
 	public static boolean findNodeInBinaryTree(TreeNode root, int element) {
 		if (root == null) {
@@ -127,6 +132,74 @@ public class BinaryTree {
 			return current.data;
 			
 		}
+		
+		/**
+		 * Find common ancestor in Binary tree with optimized approach using 
+		 * In-Time and Out-Time concept 
+		 * TC -> O(N+Q.H)   SC-> O(N) 
+		 * @param args
+		 */
+		
+		public static int findCommonAncestorOfBT(TreeNode root, int x, int y) {
+
+			// Calculate InTime and OutTime for each node of tree.
+			calculateInTimeOutTime(root);
+
+			TreeNode current = root;
+			while (true) {
+
+				boolean currentLeftX = isAncestor(current.left.data, x);
+				boolean currentLeftY = isAncestor(current.left.data, y);
+
+				boolean currentRightX = isAncestor(current.right.data, x);
+				boolean currentRightY = isAncestor(current.right.data, y);
+				if (currentLeftX && currentLeftY) {
+					current = current.left;
+
+				} else if (currentRightX && currentRightY) {
+					current = current.right;
+				} else {
+					break;
+				}
+
+			}
+
+			return current.data;
+
+		}
+
+		//Pre-processing to calculate inTime and outTime for each node in tree.
+		public static void calculateInTimeOutTime(TreeNode root) {
+
+			List<Integer> inOutTime = new ArrayList<>();
+			if (root == null) {
+				return;
+			}
+			int in_Time = time++;
+			inOutTime.add(in_Time);
+			nodeInOutTimeMap.put(root.data, inOutTime);
+			calculateInTimeOutTime(root.left);
+			calculateInTimeOutTime(root.right);
+			int out_time = time++;
+			if (nodeInOutTimeMap.containsKey(root.data)) {
+				List<Integer> inoutList = nodeInOutTimeMap.get(root.data);
+				inoutList.add(out_time);
+			}
+
+		}
+
+		static boolean isAncestor(int x, int y) {
+
+			int intTimeX = nodeInOutTimeMap.get(x).get(0);
+			int inTimeY = nodeInOutTimeMap.get(y).get(0);
+			int outTimeX = nodeInOutTimeMap.get(x).get(1);
+			int outTimeY = nodeInOutTimeMap.get(y).get(1);
+			if ((intTimeX < inTimeY) && (outTimeX > outTimeY)) {
+				return true;
+			}
+			return false;
+
+		}
 	public static void main(String[] args) {
 
 		TreeNode node = new TreeNode(6);
@@ -180,6 +253,22 @@ public class BinaryTree {
 
 		int bstCommonAncestor = findCommonAncestorInBST(root, 12, 50);
 		System.out.println("Least common ancestor in BST is " + bstCommonAncestor);
+	    
+		//Find common ancestor of Binary tree using in_time and out_time approach
+		
+		TreeNode node2= new TreeNode(1);
+		node2.left= new TreeNode(2);
+		node2.right = new TreeNode(3);
+		node2.left.left= new TreeNode(4);
+		node2.right.left= new TreeNode(5);
+		node2.right.left.left= new TreeNode(7);
+		node2.right.right= new TreeNode(6);
+		node2.right.right.left= new TreeNode(8);
+		node2.right.right.right=new TreeNode(9);
+		
+	    int btCommonAncestor= findCommonAncestorOfBT(node2,6,7);
+	    System.out.println("Least common ancestor in BT using intime and outtime approach "+btCommonAncestor);
+	   
 		
 	}
 }
