@@ -304,7 +304,38 @@ public class BinarySearchTree {
 		return inOrderTraversal(root.right, smallest);
 
 	}
+/**
+ * Two elements of a Binary Search Tree (BST), represented by root A are swapped by mistake. Tell us the 2 values, when swapped, will restore the Binary Search Tree (BST).
+ * A solution using O(n) space is pretty straightforward. Could you devise a constant space solution?
+ * Note: The 2 values must be returned in ascending order
+ * Input 
+ * Given inOrder of tree is 
+ * 
+ */
+public static List<Integer> restoreBinaryTree(TreeNode root) {
 
+	List<Integer> inorderList = new ArrayList<>();
+	List<Integer> result = new ArrayList<>();
+	int prev = Integer.MIN_VALUE;
+	int first = -1;
+	int second = -1;
+	inOrder(root, inorderList);
+
+	for (int i = 0; i < inorderList.size(); i++) {
+		if (inorderList.get(i) < prev) {
+			if (first == -1) {
+				first = prev;
+			}
+
+			second = inorderList.get(i);
+		}
+		prev = inorderList.get(i);
+
+	}
+	result.add(second);
+	result.add(first);
+	return result;
+}
 	public static void main(String[] args) {
 
 		// Create binary search tree
@@ -381,6 +412,17 @@ public class BinarySearchTree {
 		} else {
 			System.out.println("Either BST tree has no node or there is no node at nth samllest position in BST");
 		}
+		
+		// Find two number which has swapped by mistake in BST
+
+		TreeNode node3 = new TreeNode(9);
+		node3.left = new TreeNode(8);
+		node3.right = new TreeNode(11);
+		node3.right.right = new TreeNode(13);
+		node3.left.left = new TreeNode(12);
+		node3.left.right = new TreeNode(6);
+		List<Integer> resList = restoreBinaryTree(node3);
+		System.out.println("Swap these two element to reconstruct BST" + resList);
      }
 
 }
