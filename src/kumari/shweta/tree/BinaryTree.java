@@ -200,6 +200,35 @@ public class BinaryTree {
 			return false;
 
 		}
+		/**
+		 * Invert binary tree --> Convert  binary tree in mirror image form
+		 * @param root
+		 * @return
+		 */
+		public static void invertBinaryTree(Node root) {
+			Node result = invert(root);
+			System.out.println("\nInverted binary tree");
+			TreeTraversal.inorder(result);
+
+		}
+
+		/**
+		 * @param root
+		 * @return
+		 */
+		private static Node invert(Node root) {
+
+			if (root == null) {
+				return null;
+			}
+			Node temp = root.left;
+			root.left = root.right;
+			root.right = temp;
+			root.left = invert(root.left);
+			root.right = invert(root.right);
+			return root;
+		}
+
 	public static void main(String[] args) {
 
 		TreeNode node = new TreeNode(6);
@@ -268,7 +297,17 @@ public class BinaryTree {
 		
 	    int btCommonAncestor= findCommonAncestorOfBT(node2,6,7);
 	    System.out.println("Least common ancestor in BT using intime and outtime approach "+btCommonAncestor);
-	   
-		
+	    
+		// Invert Binary tree
+		Node node3 = new Node(1);
+		node3.left = new Node(2);
+		node3.right = new Node(3);
+		node3.left.left = new Node(4);
+		node3.left.right = new Node(5);
+		node3.right.right = new Node(6);
+		node3.right.right.left = new Node(7);
+		node3.right.right.right = new Node(8);
+		TreeTraversal.inorder(node3);
+		invertBinaryTree(node3);
 	}
 }
