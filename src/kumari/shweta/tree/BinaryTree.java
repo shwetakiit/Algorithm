@@ -229,6 +229,27 @@ public class BinaryTree {
 			return root;
 		}
 
+		/**
+		 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path
+		 * such that adding up all the values along the path equals the given sum.
+		 * Example in order of binary tree 7,11,2,4,5,13,8,4,1 K=22 Out put is true
+		 * because path from root node to leaf node is [5,4,11,2]
+		 * TC ->O(N) SC->O(H)
+		 * @param args
+		 */
+		public static boolean checkPathSum(Node root, int element) {
+
+			if (root == null) { // This base case for node which is null(For example left of node 4 is null so
+								// left of node 4 will return simply false ) or root node it self null
+				return false;
+			}
+			if (root.left == null && root.right == null) { // Left node which has left and right child null
+				return (root.data == element);
+			}
+
+			return checkPathSum(root.left, element - root.data) || checkPathSum(root.right, element - root.data);
+
+		}
 	public static void main(String[] args) {
 
 		TreeNode node = new TreeNode(6);
@@ -309,5 +330,15 @@ public class BinaryTree {
 		node3.right.right.right = new Node(8);
 		TreeTraversal.inorder(node3);
 		invertBinaryTree(node3);
+		
+		// is path sum from root node to leaf node is equal to given element ?
+		
+		boolean isPathVailable= checkPathSum(node3, 17);
+	   if(isPathVailable) {
+		   System.out.println("\nPath is available from root node to leaf node of sum equal to given element");
+	   }else {
+		   System.out.println("\nPath is not available from root node to leaf node of sum equal to given element");
+	   }
+		
 	}
 }
