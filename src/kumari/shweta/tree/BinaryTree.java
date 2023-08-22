@@ -13,6 +13,7 @@ import java.util.Map;
 public class BinaryTree {
 	
 	static int time=0;
+	static int diameter=0;
 	static Map<Integer,List<Integer>> nodeInOutTimeMap = new HashMap<>();
 
 	public static boolean findNodeInBinaryTree(TreeNode root, int element) {
@@ -250,6 +251,28 @@ public class BinaryTree {
 			return checkPathSum(root.left, element - root.data) || checkPathSum(root.right, element - root.data);
 
 		}
+
+		/**
+		 * Given a Binary Tree A consisting of N integer nodes, you need to find the
+		 * diameter of the tree. The diameter of a tree is the number of edges on the
+		 * longest path between two nodes in the tree. TC --> O(N) SC-->O(H)
+		 */
+		public static int findDaimeterOfBinaryTree(Node root) {
+			int height = heightOfNode(root);
+			return diameter;
+		}
+
+		private static int heightOfNode(Node root) {
+			if (root == null) { // For leaf node height is 0 and for null node height should be -1
+				return -1;
+			}
+
+			int lh = heightOfNode(root.left);
+			int rh = heightOfNode(root.right);
+			diameter = Math.max(diameter, lh + rh + 2);
+			return Math.max(lh, rh) + 1;
+		}
+
 	public static void main(String[] args) {
 
 		TreeNode node = new TreeNode(6);
@@ -339,6 +362,9 @@ public class BinaryTree {
 	   }else {
 		   System.out.println("\nPath is not available from root node to leaf node of sum equal to given element");
 	   }
+	   //Find diameter of Binary tree 
+	   int diameter=findDaimeterOfBinaryTree(node3);
+	   System.out.println("Diameter of node binary tree is "+diameter);
 		
 	}
 }
