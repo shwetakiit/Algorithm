@@ -14,6 +14,7 @@ public class BinaryTree {
 	
 	static int time=0;
 	static int diameter=0;
+	static boolean isPartionPossible = false;
 	static Map<Integer,List<Integer>> nodeInOutTimeMap = new HashMap<>();
 
 	public static boolean findNodeInBinaryTree(TreeNode root, int element) {
@@ -272,6 +273,52 @@ public class BinaryTree {
 			diameter = Math.max(diameter, lh + rh + 2);
 			return Math.max(lh, rh) + 1;
 		}
+		/**
+		 * Given a binary tree A. Check whether it is possible to partition the
+		 * tree to two trees which have equal sum of values after removing exactly
+		 * one edge on the original tree. 
+		 * TC - O(N) SC ->O(H)
+		 * @param root
+		 * @return
+		 */
+		static boolean  checkBinaryTreePartion(TreeNode root) {
+			Long total_sum = sumOfBinaryTree(root);
+			if (total_sum % 2 == 1) {
+				return false;
+			}
+
+			checkPartion(root, total_sum);
+			return isPartionPossible;
+		}
+
+		/**
+		 * @param root
+		 */
+		private static Long checkPartion(TreeNode root, Long total_sum) {
+
+			if (root == null) {
+				return 0L;
+			}
+
+			Long leftSubTreeSum = checkPartion(root.left, total_sum);
+			Long rightSubTreeSum = checkPartion(root.right, total_sum);
+			if (leftSubTreeSum == total_sum / 2 || rightSubTreeSum == total_sum / 2) { 
+				isPartionPossible = true;
+			}
+			return leftSubTreeSum + rightSubTreeSum + root.data; // It return sum of all node in BT
+
+		}
+
+		/**
+		 * @param root
+		 * @return
+		 */
+		private static Long sumOfBinaryTree(TreeNode root) {
+			if (root == null) {
+				return 0L;
+			}
+			return sumOfBinaryTree(root.left) + sumOfBinaryTree(root.right) + root.data;
+		}
 
 	public static void main(String[] args) {
 
@@ -365,6 +412,25 @@ public class BinaryTree {
 	   //Find diameter of Binary tree 
 	   int diameter=findDaimeterOfBinaryTree(node3);
 	   System.out.println("Diameter of node binary tree is "+diameter);
-		
-	}
+	   
+		// Check partion is possible or not for given Binary tree
+		TreeNode node4 = new TreeNode(5);
+		node4.right = new TreeNode(7);
+		node4.right.left = new TreeNode(5);
+		node4.right.right = new TreeNode(6);
+		node4.left = new TreeNode(3);
+		node4.left.left = new TreeNode(4);
+		node4.left.left.left = new TreeNode(2);
+		TreeNode subTNode = node4.left.right = new TreeNode(6);
+		subTNode.left = new TreeNode(3);
+		subTNode.right = new TreeNode(4);
+		subTNode.right.right = new TreeNode(1);
+
+		boolean isPartitionPossible = checkBinaryTreePartion(node4);
+		if (isPartitionPossible) {
+			System.out.println("Yes partion of tree in two equal tree is possible");
+		} else {
+			System.out.println("No partion of tree in tow equal tree is not possible");
+		}
+	 }
 }
