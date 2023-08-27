@@ -19,6 +19,15 @@ class TreeLinkedNode {
 }
 
 public class NextPointerBinaryTree {
+	
+	/**
+	 * Given a binary tree,Populate each next pointer to point to its next right node. If there is
+	 *  no next right node, the next pointer should be set to NULL.
+	 *  Initially, all next pointers are set to NULL. Assume perfect binary tree. 
+	 *  TC->O(N) SC->O(1)
+	 * @param root
+	 * @return
+	 */
 
 	public static List<Integer> connectNode(TreeLinkedNode root) {
 
