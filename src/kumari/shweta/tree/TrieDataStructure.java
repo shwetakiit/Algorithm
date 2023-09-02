@@ -6,7 +6,11 @@ package kumari.shweta.tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.graalvm.compiler.word.Word;
 
 
 /**
@@ -37,6 +41,22 @@ class Trie {
 	}
 }
 
+class TrieNode{
+
+	char data;
+	boolean eow;
+	TrieNode[] childerNode;
+	Map<Character,Integer> map; //Store frequency of character
+	public TrieNode(char ch) {
+		data=ch;
+		map = new HashMap<>();
+		childerNode = new TrieNode[26];
+		map.put(ch, 1);
+		eow=false;
+	}
+	
+	
+}
 public class TrieDataStructure {
 
 	public List<Boolean> searchWordInDictionary(List<String> dictionary, List<String> wordList) {
@@ -164,6 +184,75 @@ public class TrieDataStructure {
 		return root;
 
 	}
+	
+	/*
+	 * Given a list of N words, find the shortest unique prefix to represent each
+	 * word in the list. NOTE: Assume that no word is the prefix of another. In
+	 * other words, the representation is always possible
+	 * Input of wordList [tri,trap,plate,cat,part,place,tie]  Output [tri,tra,plat,c,pa,plac,ti]
+	 * 
+	 */
+	public static void insertNodeInTrieDS(TrieNode root, String word) {
+		TrieNode current = root;
+		for (int i = 0; i < word.length(); i++) {
+			int idx = word.charAt(i) - 'a';
+			if (current.childerNode[idx] == null) {
+				current.childerNode[idx] = new TrieNode(word.charAt(i));
+
+			} else {
+				TrieNode tempNode = current.childerNode[idx];
+				int k = tempNode.map.get(word.charAt(i));
+				tempNode.map.put(word.charAt(i), k + 1);
+			}
+			current = current.childerNode[idx];
+
+		}
+		current.eow = true;
+
+	}
+	
+	public static List<String> findUniquePrefixOfWordInDictionary(List<String> dictionary) {
+		TrieNode root = new TrieNode('1');
+		List<String> result = new ArrayList<>();
+		for (int i = 0; i < dictionary.size(); i++) {
+			insertNodeInTrieDS(root, dictionary.get(i));
+		}
+		for (int i = 0; i < dictionary.size(); i++) {
+			String uniquePrefix = findUniquePrefixOfWord(root, dictionary.get(i));
+			result.add(uniquePrefix);
+		}
+
+		return result;
+	}
+	
+	/**
+	 * @param root
+	 * @param word
+	 * @return
+	 */
+	private static String findUniquePrefixOfWord(TrieNode root, String word) {
+
+		TrieNode current = root;
+		String result = "";
+		for (int i = 0; i < word.length(); i++) {
+			int idx = word.charAt(i) - 'a';
+			TrieNode childNode = current.childerNode[idx];
+			char data = childNode.data;
+			if (childNode == null) { //If word not found .This scenario is not possible for given word list ,It is possible If we are searching any word which is not in word list
+				return result;
+			} else if (childNode != null && childNode.map.get(data) == 1) { // If reached to node  which has frequency 1 .Stop iteration  
+				result = result + data;
+				return result;
+			} else {
+				current = current.childerNode[idx];
+				result = result + data;
+			}
+
+		}
+
+		return result;
+	}
+
 	public static void main(String[] args) {
 
 		TrieDataStructure obj = new TrieDataStructure();
@@ -176,7 +265,10 @@ public class TrieDataStructure {
 		// Delete word from Dictionary list
 		boolean isWordDeleted = obj.deleteWordFromDisctionary(disctionary, "try");
 		System.out.println("Word deleted?  " + isWordDeleted);
-
+		
+		// Find unique prefix for each word from list of word
+		List<String> inputList = Arrays.asList("tri", "trap", "plate", "cat", "part", "place", "tie");
+		List<String> uniquePrefix = findUniquePrefixOfWordInDictionary(inputList);
+		System.out.println("Unique prefix of each world " + uniquePrefix);
 	}
-
-}
+	}
