@@ -4,6 +4,7 @@ package kumari.shweta.tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * @author Shweta Kumari
@@ -149,6 +150,32 @@ public class MiniumCostOfRopesUsingHeap {
 		return minHeap;
 	}
 
+	/**
+	 * In previous approach created minHeap for list of size n so creating minHeap TC O(nlogn)
+	 * For list of size n  is n2logn --Which is not efficient for large input and we get Time limit exceeded error .
+	 * TC O(n2logn) which is not efficient for large input 
+	 * @param A
+	 * @return
+	 */
+	//Second approach 
+	public int findMinimumCostOfRope(List<Integer> A) {
+		PriorityQueue<Integer> queue = new PriorityQueue<>();
+		for (int i = 0; i < A.size(); i++) {
+			queue.add(A.get(i));
+		}
+		int cost = 0;
+		while (queue.size() > 1) {
+			int min1 = queue.remove();
+			int min2 = queue.remove();
+			int sum = min1 + min2;
+			cost = cost + sum;
+			if (queue.size() != 0) {
+				queue.add(sum);
+			}
+		}
+
+		return cost;
+	}
 	public static void main(String[] args) {
 
 		MiniumCostOfRopesUsingHeap obj = new MiniumCostOfRopesUsingHeap();

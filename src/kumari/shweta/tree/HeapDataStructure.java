@@ -17,12 +17,12 @@ public class HeapDataStructure {
 		// Build minHeap using given list
 		List<Integer> minHeap = buildHeap(list);
 
-		System.out.println("Created heap tree" + minHeap);
+		System.out.println("Created minHeap" + minHeap);
 
 		// Now insert element in minHeap
-		minHeap.add(10); // Add element on last index of array
+		minHeap.add(elemenet); // Add element on last index of array
 
-		System.out.println(minHeap);
+		System.out.println("Inserted node in last index of minHeap "+minHeap);
 		int i = minHeap.size() - 1;// We insert element at last index of heap array
 		while (i > 0) {
 
@@ -41,20 +41,21 @@ public class HeapDataStructure {
 	public List<Integer> deleteSamllest(List<Integer> minHeap) {
 
 		swap(minHeap, 0, minHeap.size() - 1); // Swap root element to the leaf node of heap
-		System.out.println(minHeap);
+		System.out.println("Swapped root node at last leaf node "+minHeap);
 
 		minHeap.remove(minHeap.size() - 1); // Removed root element of min heap
 		heapify(minHeap, 0);
 		return minHeap;
 	}
-
+	
+	
 	/**
 	 * @param minHeap
 	 * @param i
 	 */
 	private void heapify(List<Integer> minHeap, int i) {
 		int N = minHeap.size();  // Total no of node in heap.
-		while (2 * i + 1 < N) {  // Until index of last left node less than total no of node in head , We can't
+		while (2 * i + 1 < N) {  // Until index of last left node less than total no of node in heap.We can't
 								 // take right node for this condition because in complete binary tree right node
 								 // can be null.
 
@@ -68,7 +69,7 @@ public class HeapDataStructure {
 			}
 
 			int minNode = minimum(parent, left, right);
-			if (minNode == parent) { // If minium between left , right and parent is parent node then no more swap needed tree is in minHeap form
+			if (minNode == parent) { // If minimum between left , right and parent is parent node then no more swap needed tree is in minHeap form
 									
 				break;
 			} else if (minNode == left) {
@@ -101,16 +102,18 @@ public class HeapDataStructure {
 	 * @return
 	 */
 	private int minimum(int parent, int left, int right) {
-
-		int minNode;
-		if (parent < left && parent < right) {
-			minNode = parent;
-		} else if (parent < left && parent > right) {
-			minNode = right;
+		int temp = 0;
+		if (left < right) {
+			temp = left;
 		} else {
-			minNode = left;
+			temp = right;
 		}
-		return minNode;
+		if (parent > temp) {
+			return temp;
+		} else {
+			return parent;
+		}
+
 	}
 
 	/**
@@ -124,16 +127,23 @@ public class HeapDataStructure {
 		minHeap.set(i, temp);
 	}
 
+	
 	public static void main(String[] args) {
 
 		HeapDataStructure obj = new HeapDataStructure();
-		List<Integer> list = Arrays.asList(12, 5, 25, 20, 13, 22, 24, 35);
-		List<Integer> minHeap = new ArrayList<>(list);
+		
+		  List<Integer> list = Arrays.asList(12, 5, 25, 20, 13, 22, 24, 35);
+		  List<Integer> minHeap = new ArrayList<>(list);
+		  
+		  // Insert element in minHeap
+		  List<Integer> result = obj.insert(minHeap, 10);
+		  System.out.println("After inserting node in minHeap"+result); 
+		  List<Integer> resIntegers =
+		  obj.deleteSamllest(minHeap);
+		  System.out.println("After extracting smallest elemnt from minHeap is " +
+		  resIntegers);
+		 
+		
 
-		// Insert element in minHeap
-		List<Integer> result = obj.insert(minHeap, 10);
-		System.out.println(result);
-		List<Integer> resIntegers = obj.deleteSamllest(minHeap);
-		System.out.println("After extracting smallest elemnt from minHeap is " + resIntegers);
 	}
 }
