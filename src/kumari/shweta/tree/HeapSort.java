@@ -80,6 +80,18 @@ public class HeapSort {
 
 	}
 
+	public List<Integer> heapSortDecending(List<Integer> maxHeap) {
+
+		List<Integer> result = new ArrayList<>();
+		while (maxHeap.size() > 0) {
+			swap(maxHeap, 0, maxHeap.size() - 1); // Swap root element to the leaf node of heap
+			int node = maxHeap.remove(maxHeap.size() - 1); // Removed leaf element of min heap
+			result.add(node); // Add removed node in result list
+			maxHeapify(maxHeap, 0); // After swap of root and leaf node BT is not in min heap form so call heapify
+									// to convert in minHeap
+		}
+		return result;
+	}
 	/**
 	 * @param maxHeap
 	 * @param i
@@ -102,7 +114,7 @@ public class HeapSort {
 			int left = maxHeap.get(2 * i + 1);
 			int right = Integer.MIN_VALUE;
 
-			if ((2 * i + 2) > N) {
+			if ((2 * i + 2) < N) { //This condition need to check in case right node is null and this situation happen in CBT of just before one level of leaf node which has no right child and left child of that node is last node of CBT .
 				right = maxHeap.get(2 * i + 2);
 
 			}
@@ -141,8 +153,13 @@ public class HeapSort {
 
 		HeapSort obj = new HeapSort();
 		List<Integer> list = Arrays.asList(5, 12, 22, 20, 13, 25, 24, 35);
-		List<Integer> maxHeap = new ArrayList<>(list);
-		List<Integer> result = obj.heapSortAscending(maxHeap);
+		List<Integer> minHeap = new ArrayList<>(list);
+		List<Integer> result = obj.heapSortAscending(minHeap);
 		System.out.println("Heap sort in ascending order" + result);
+		
+		List<Integer> list1= Arrays.asList(14,13,10,7,6,8,5,2,1,3);
+		List<Integer> maxHeap = new ArrayList<>(list1);
+		List<Integer> sortedList = obj.heapSortDecending(maxHeap);
+		System.out.println("Sorted in decending order"+sortedList);
 	}
 }
