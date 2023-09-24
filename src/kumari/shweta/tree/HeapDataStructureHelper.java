@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HeapDataStructure {
+public class HeapDataStructureHelper {
 
 	// Insert node in min heap TC O(height of tree) -->O(logN)
 
@@ -50,10 +50,11 @@ public class HeapDataStructure {
 	
 	
 	/**
+	 * Covert in minHeap 
 	 * @param minHeap
 	 * @param i
 	 */
-	private void heapify(List<Integer> minHeap, int i) {
+	public void heapify(List<Integer> minHeap, int i) {
 		int N = minHeap.size();  // Total no of node in heap.
 		while (2 * i + 1 < N) {  // Until index of last left node less than total no of node in heap.We can't
 								 // take right node for this condition because in complete binary tree right node
@@ -85,6 +86,9 @@ public class HeapDataStructure {
 
 	}
 
+	/*
+	 * Build minHeap from given list of data 
+	 */
 	// TC -->O(N)
 	public List<Integer> buildHeap(List<Integer> list) {
 		int N = list.size() - 1;
@@ -101,7 +105,7 @@ public class HeapDataStructure {
 	 * @param right
 	 * @return
 	 */
-	private int minimum(int parent, int left, int right) {
+	public int minimum(int parent, int left, int right) {
 		int temp = 0;
 		if (left < right) {
 			temp = left;
@@ -121,7 +125,7 @@ public class HeapDataStructure {
 	 * @param pi
 	 * @param i
 	 */
-	private void swap(List<Integer> minHeap, int pi, int i) {
+	public void swap(List<Integer> minHeap, int pi, int i) {
 		int temp = minHeap.get(pi);
 		minHeap.set(pi, minHeap.get(i));
 		minHeap.set(i, temp);
@@ -130,7 +134,7 @@ public class HeapDataStructure {
 	
 	public static void main(String[] args) {
 
-		HeapDataStructure obj = new HeapDataStructure();
+		HeapDataStructureHelper obj = new HeapDataStructureHelper();
 		
 		  List<Integer> list = Arrays.asList(12, 5, 25, 20, 13, 22, 24, 35);
 		  List<Integer> minHeap = new ArrayList<>(list);
