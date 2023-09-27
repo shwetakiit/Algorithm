@@ -49,6 +49,15 @@ public class HeapDataStructureHelper {
 	}
 	
 	
+	// Extract minimum element from heap data structure
+	public int extractMin(List<Integer> minHeap) {
+		
+		swap(minHeap, 0, minHeap.size() - 1); // Swap root element to the leaf node of heap
+	 	int minElement = minHeap.remove(minHeap.size() - 1); // Removed root element of min heap
+		heapify(minHeap, 0);
+		return minElement;
+	}
+	
 	/**
 	 * Covert in minHeap 
 	 * @param minHeap

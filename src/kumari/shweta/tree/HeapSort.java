@@ -149,6 +149,51 @@ public class HeapSort {
 		return maxNode;
 	}
 
+	/**
+	 * Problem Description   
+	 * N people having different priorities are standing in a queue.The queue follows the property that each person is standing at most B places away from its position in the sorted queue.
+	 * Your task is to sort the queue in the increasing order of priorities.
+	 * NOTE:
+	 * 1. No two persons can have the same priority  
+	 * 2. Use the property of the queue to sort the queue with complexity O(NlogB).
+	 * 
+	 * Problem Constraints  -->1 <= N <= 100000    0 <= B <= N
+	 * Input Format  :--
+	 * The first argument is an integer array A representing the priorities and initial order of N persons.
+	 * The second argument is an integer B.
+	 * Output Format :--
+	 * Return an integer array representing the sorted queue.
+	 * Example Input  --> A = [1, 40, 2, 3]  B = 2
+	 * Output -->[1, 2, 3, 40]
+	 * 
+	 * TC --O(K+NlogK) SC --O(K)
+	 */
+	
+	public List<Integer> sortedQueueInIncreasingOfPriorities(List<Integer> priorities, int k) {
+		List<Integer> result = new ArrayList<>();
+		HeapDataStructureHelper helper = new HeapDataStructureHelper();
+		
+        List<Integer> subList = new ArrayList<>(priorities.subList(0, k + 1)); 
+        
+        // Build minHeap for k+1 element extract root and store in result.
+		List<Integer> buildMinHeap = helper.buildHeap(subList);
+
+		// Remove smallest element and insert next element from priorities
+		
+		for (int i = k+1; i < priorities.size(); i++) {
+			int smallest = helper.extractMin(buildMinHeap);
+			result.add(smallest);
+			buildMinHeap.add(priorities.get(i));
+			minHeapify(buildMinHeap, 0);
+
+		}
+		// After inserting all element from priorities remove smallest element one by one and store in result .
+		while (buildMinHeap.size() > 0) {
+			int smallest = helper.extractMin(buildMinHeap);
+			result.add(smallest);
+		}
+		return result;
+	}
 	public static void main(String[] args) {
 
 		HeapSort obj = new HeapSort();
@@ -161,5 +206,13 @@ public class HeapSort {
 		List<Integer> maxHeap = new ArrayList<>(list1);
 		List<Integer> sortedList = obj.heapSortDecending(maxHeap);
 		System.out.println("Sorted in decending order"+sortedList);
+		
+		/* Sort the queue in the increasing order of priorities. */
+		List<Integer> prioritiesList  = Arrays.asList(11,13,20,22,31,45,48,50,60);
+		List<Integer> priorities = new ArrayList<>(prioritiesList);
+		List<Integer> sortedQueue = obj.sortedQueueInIncreasingOfPriorities(priorities, 4);
+		System.out.println("Sorted queue in increaing order of Priority is "+sortedQueue);
+		
+		
 	}
 }
