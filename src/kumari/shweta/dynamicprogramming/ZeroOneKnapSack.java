@@ -31,17 +31,17 @@ public class ZeroOneKnapSack {
 	}
 
 	private int maxHappiness(int[] h, int[] wt, int i, int j, int[][] dp) {
-		if (i == 0 || j == 0) {
+		if (i == 0 || j == 0) {//Either happiness is zero or weight is zero.
 			return 0;
 		}
-		if (dp[i - 1][j - 1] != -1) {
+		if (dp[i - 1][j - 1] != -1) { //If solution is already exist 
 			return dp[i - 1][j - 1];
 		}
 
-		if (wt[i - 1] <= j) {
-			dp[i - 1][j - 1] = Math.max(0 + maxHappiness(h, wt, i - 1, j, dp),
-					h[i - 1] + maxHappiness(h, wt, i - 1, j - wt[i - 1], dp));
-		} else {
+		if (wt[i - 1] <= j) { //If weight of toy is within Capacity then find maximum of select toy and not select toy 
+			dp[i - 1][j - 1] = Math.max(0 + maxHappiness(h, wt, i - 1, j, dp)/*If not select toy */,
+					h[i - 1] + maxHappiness(h, wt, i - 1, j - wt[i - 1], dp)/*If select toy*/);
+		} else { //If weight of toy is more than capacity so don't select toy.
 
 			dp[i - 1][j - 1] = 0 + maxHappiness(h, wt, i - 1, j, dp);
 		}
