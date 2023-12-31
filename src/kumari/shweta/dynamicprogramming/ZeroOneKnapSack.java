@@ -16,6 +16,7 @@ package kumari.shweta.dynamicprogramming;
 
 public class ZeroOneKnapSack {
 
+	//Top down approach 
 	public int findMaxHappiness(int h[], int wt[], int W) {
 
 		int noOfToys = h.length;
@@ -49,6 +50,30 @@ public class ZeroOneKnapSack {
 		return dp[i - 1][j - 1];
 	}
 
+	//Bottom up approach
+	
+	public int findHappinessBottomUp(int h[],int wt[],int W) {
+		int noOfToys =h.length;
+		int dp[][] = new int[noOfToys+1][W+1];
+		
+		//Intialize row and column with zero.
+		for(int i =0;i<=noOfToys;i++) {
+			for(int j=0;j<=W;j++) {
+				dp[i][j]=0;
+			}
+		}
+		for(int i =1;i<=noOfToys;i++) {
+			for(int j=1;j<=W;j++) {
+				dp[i][j]=dp[i-1][j];
+				if(i<wt.length && j-wt[i-1]>=0) {  //Note i <should be less than wt.length 
+					dp[i][j]=Math.max(0+dp[i-1][j],h[i-1]+dp[i-1][j-wt[i-1]]);
+					
+				}
+			}
+		}
+		
+		return dp[noOfToys][W]; //Last element of dp grid 
+	}
 	public static void main(String[] args) {
 		ZeroOneKnapSack obj = new ZeroOneKnapSack();
 		
@@ -68,5 +93,12 @@ public class ZeroOneKnapSack {
 		int W = 50;
 		int maxHappiness = obj.findMaxHappiness(h, wt, W);
 		System.out.println("Maximum happiness is " + maxHappiness);
+		
+		//Bottom up approach.
+		int ht[]= {12,20,15,6,10};
+		int weight[]= {3,6,5,2,4};
+		int capacity=8;
+	    maxHappiness= obj.findHappinessBottomUp(ht, weight, capacity);
+	    System.out.println("Maximum happiness with bottom up approach "+maxHappiness);
 		}
 	}
