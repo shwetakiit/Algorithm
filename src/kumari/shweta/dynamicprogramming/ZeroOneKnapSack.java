@@ -65,7 +65,7 @@ public class ZeroOneKnapSack {
 		for(int i =1;i<=noOfToys;i++) {
 			for(int j=1;j<=W;j++) {
 				dp[i][j]=dp[i-1][j];
-				if(i<wt.length && j-wt[i-1]>=0) {  //Note i <should be less than wt.length 
+				if(i<=wt.length && j-wt[i-1]>=0) {  //Note i <should be less than wt.length 
 					dp[i][j]=Math.max(0+dp[i-1][j],h[i-1]+dp[i-1][j-wt[i-1]]);
 					
 				}
