@@ -28,6 +28,13 @@ public class IsLandsProblem {
 		int dx[] = { -1, 0, 1, 0 }; // Total Four possible neighbour to check (-1,0) top ,(0,-1)left ,(1,0)
 									// bottom,(0,1)right
 		int dy[] = { 0, -1, 0, 1 };
+		
+		//If Direction to check sources is 8 direction in that case
+		
+	   /**
+	    * int dx[]={-1,-1,0,1,1,1,0,-1}  left ,right ,top,bottom,top-left,top-right,bottom-left,bottom-right
+	    * int dy[]={0,-1,-1,-1,0,1,1,1}
+	    */
 
 		int col = arr[0].length;
 		int row = arr.length;
