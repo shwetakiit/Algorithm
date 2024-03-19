@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Stack;
 
 /*Problem Description
 Given an directed acyclic graph having A nodes. A matrix B of size M x 2 is given which represents the M edges such that there is a edge directed from node B[i][0] to node B[i][1].
@@ -41,6 +42,7 @@ Output -> [5, 6, 1, 3, 4, 2]
 */
 public class TopologicalSort {
 
+	//Left to Right Approach 
 	int[] topologicalSorting(int A, List<List<Integer>> B) {
 
 		Queue<Integer> queue = new PriorityQueue<Integer>();
@@ -116,8 +118,55 @@ public class TopologicalSort {
 
 		return indegree;
 	}
+	
+	//Right to Left Approach 
+	Stack<Integer> topologicalSortingRightToLeft(int A, List<List<Integer>> B) {
+		Stack<Integer> stack = new Stack<>();
+		
+		// Create graph -->Adjacency list --> Array of List
+		ArrayList<Integer> adjecyList[] = new ArrayList[A + 1];
 
-	public static void main(String[] args) {
+		for (int i = 0; i <= A; i++) {
+			adjecyList[i] = new ArrayList<Integer>();
+
+		}
+
+		// Add Neighbor for source index
+		for (List<Integer> edges : B) { // Prepare array of neighbor like -> 0-[1,3],1->[2,3],2->[4,5]
+			int src = edges.get(0);
+			adjecyList[src].add(edges.get(1));
+
+		}
+		
+		boolean[] visited= new boolean[A+1];
+		
+		for(int i =0;i<=A;i++) {
+			if(visited[i]==false) {
+				dfsRightToLeft(i,stack,visited,adjecyList);
+			}
+		}
+		return stack;
+		
+	}
+
+	/**
+	 * @param i
+	 * @param stack
+	 * @param visited
+	 */
+	private void dfsRightToLeft(int i, Stack<Integer> stack, boolean[] visited, ArrayList<Integer>[] adjecyList) {
+		visited[i] = true;
+		for (Integer neighbors : adjecyList[i]) {
+
+			if (visited[neighbors] == false) {
+				dfsRightToLeft(neighbors, stack, visited, adjecyList);
+			}
+		}
+		
+		stack.add(i);
+		
+	}
+      public static void main(String[] args) {
 
 		TopologicalSort obj = new TopologicalSort();
 		// Test case 1
@@ -140,6 +189,33 @@ public class TopologicalSort {
 		for (int i = 0; i < topologicalSorted.length; i++) {
 			System.out.print(topologicalSorted[i] + " ");
 		}
-	}
+		
+		//Test case 2:
+	 
+		int A1 = 6;
+		List<Integer> e11 = Arrays.asList(0, 1);
+		List<Integer> e22 = Arrays.asList(1, 2);
+		List<Integer> e33 = Arrays.asList(2, 5);
+		List<Integer> e44 = Arrays.asList(0, 3);
+		List<Integer> e55 = Arrays.asList(3, 4);
+		List<Integer> e66 = Arrays.asList(4, 5);
+		List<Integer> e77 = Arrays.asList(6, 5);
 
+		List<List<Integer>> edges = new ArrayList<>();
+		edges.add(e11);
+		edges.add(e22);
+		edges.add(e33);
+		edges.add(e44);
+		edges.add(e55);
+		edges.add(e66);
+		edges.add(e77);
+
+		Stack<Integer> reStack = obj.topologicalSortingRightToLeft(A1, edges);
+		System.out.println("Stack is ?" + reStack.size());
+
+		System.out.println("Topological order from Right to Left");
+		for (Integer integer : reStack) {
+			System.out.print(integer + " ");
+		}
+   }
 }
