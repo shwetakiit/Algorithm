@@ -111,6 +111,12 @@ public class DijkstraAlgorithm {
 				}
 			}
 		}
+		
+		for(int i=0;i<ans.length;i++) { //If at any index where we have not reached while traversing initialize value would be infinity 
+			if(ans[i]==Integer.MAX_VALUE) {
+				ans[i]=-1;
+			}
+		}
 		return ans;
 
 	}
