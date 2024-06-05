@@ -17,13 +17,14 @@ class Node {
 public class SingleLinkedListAllFeature {
 	Node head;
 	
-	// Insert Node at beginning
+	// Insert Node at beginning . TC--O(1) SC ->O(1) 
+
 	public void insertAtBeginning(int element) {
 		Node node = new Node(element);
 		node.next = head;
 		head = node;
 	}
-	// Insert Node at end
+	// Insert Node at end  TC -->O(N)  SC -->O(1)
 	public void insertNodeAtEnd(int element) {
 
 		Node node = new Node(element);
@@ -98,6 +99,8 @@ public class SingleLinkedListAllFeature {
 	 * In case the position is more than length of linked list, simply insert the
 	 * new node at the tail only. In case the position is 0, simply insert the new node
 	 * at head only. Follow 0-based indexing for the node numbering.
+	 * TC -->O(position)
+	 * SC ->O(1)
 	 */
 	public void insertNodeAtGivenPosition(int element, int position) {
 		Node node = new Node(element);
@@ -121,6 +124,7 @@ public class SingleLinkedListAllFeature {
 
 	}
 
+	//Delete first node  TC -O(1) SC -O(1)
 	public void deleteFirstNode() {
 		boolean isDeleted;
 		if(head == null ) {
@@ -128,6 +132,16 @@ public class SingleLinkedListAllFeature {
 		} else {
 			head=head.next;
 		}
+	}
+	
+	//Delete node at End TC ->O(1) SC ->O(1)
+	public void deleteAtEnd() {
+
+       Node last = head;
+       while(last.next.next!=null) { //Find second last node 
+    	   last=last.next;
+       }
+       last.next=null;
 	}
 
 	public void deleteGivenItem(int item) {
@@ -242,6 +256,9 @@ public class SingleLinkedListAllFeature {
 		linkedList.traversal();
 		System.out.println("Delete Node at position ");
 		linkedList.deleteAtPosition(4);
+		linkedList.traversal();
+		System.out.println("Delete Node at End ");
+		linkedList.deleteAtEnd();
 		linkedList.traversal();
 		System.out.println("Reverse linked list using recursion");
 		linkedList.reverseLinkedList();
