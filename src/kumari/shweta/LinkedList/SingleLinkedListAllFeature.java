@@ -134,14 +134,23 @@ public class SingleLinkedListAllFeature {
 		}
 	}
 	
-	//Delete node at End TC ->O(1) SC ->O(1)
+	//Delete node at End TC ->O(N) SC ->O(1) 
 	public void deleteAtEnd() {
 
-       Node last = head;
-       while(last.next.next!=null) { //Find second last node 
-    	   last=last.next;
-       }
-       last.next=null;
+		if (head == null) { // If List is empty
+			System.out.println("List is empty");
+			return;
+		} else if (head.next == null) { // If there is only one element so we can't find second last node
+
+			head = null;
+			return;
+		} else {
+			Node last = head;
+			while (last.next.next != null) { // Find second last node
+				last = last.next;
+			}
+			last.next = null;
+		}
 	}
 
 	public void deleteGivenItem(int item) {
