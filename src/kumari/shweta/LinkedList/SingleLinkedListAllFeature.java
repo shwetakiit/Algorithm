@@ -1,4 +1,7 @@
 package kumari.shweta.LinkedList;
+
+
+
 /**
  * @author Shweta Kumari
  * @Mail id : shwetakumarikiit0729@gmail.com
@@ -180,7 +183,13 @@ public class SingleLinkedListAllFeature {
 	}
 	
 	public void deleteAtPosition(int position) {
-
+		
+		//If list is empty
+		if(head==null) {
+		   System.out.println("List is empty.....");
+		   return;
+		} 
+		
 		Node temp;
 		temp = head;
 		try {
@@ -198,6 +207,45 @@ public class SingleLinkedListAllFeature {
 
 		}
 	}
+	
+
+	/**
+	 * Consider Position start from 0th, 1st,2nd 3rd,etc..
+	 */
+	public void deleteAtGivenPosition(int position) {
+
+	
+		
+		//If list is empty
+		if(head==null) {
+		   System.out.println("List is empty.....");
+		   return;
+		}
+		Node temp;
+		temp = head;
+		 if(position==0) { //If first node to be deleted .
+			
+			 head=temp.next;
+			return;
+		}
+		
+			int index=0;
+			while(index<position-1 && temp!=null) {
+				
+				temp=temp.next;
+				index++;
+			}
+			
+			if(temp==null|| temp.next==null) { //If position exceed the length of list.
+				System.out.println("Invalid position which is beyond the length of List");
+				return ;
+			} else {
+				temp.next=temp.next.next;
+			}
+			
+		
+		
+	}
 	//Reverse Linked List --> Using recusrion 
 	public void reverseLinkedList() {
 		Node temp = head;
@@ -211,6 +259,26 @@ public class SingleLinkedListAllFeature {
 		}
 		printReverse(temp.next);
 		System.out.print(temp.data+" ");
+	}
+	
+	private void reverse() {
+		
+		if(head==null) {
+			return;
+			
+		}
+		
+	   Node prev = null;
+	   Node current = head;
+	   Node temp = null;
+	   while(current != null) {
+		   
+		   temp = current.next;
+		   current.next= prev;
+		   prev= current;
+		   current=temp;
+	   }
+	   head= prev;
 	}
 	
 	// Traversing LinkedList
@@ -264,15 +332,20 @@ public class SingleLinkedListAllFeature {
 		linkedList.deleteGivenItem(5);
 		linkedList.traversal();
 		System.out.println("Delete Node at position ");
-		linkedList.deleteAtPosition(4);
+		//linkedList.deleteAtPosition(4);
+		linkedList.deleteAtGivenPosition(4);
 		linkedList.traversal();
 		System.out.println("Delete Node at End ");
 		linkedList.deleteAtEnd();
 		linkedList.traversal();
-		System.out.println("Reverse linked list using recursion");
-		linkedList.reverseLinkedList();
-		
+		//System.out.println("Reverse linked list using recursion");
+		//linkedList.reverseLinkedList();
+	   // System.out.println();
+		System.out.println("Reverse linked list using iterative approach");
+		linkedList.reverse();
+		linkedList.traversal();
 		System.out.println("Search element linked list");
+		
 		int element=100;
 		boolean isFound=linkedList.search(element);
 		if(isFound) {
