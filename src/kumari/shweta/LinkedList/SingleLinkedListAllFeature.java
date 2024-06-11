@@ -281,6 +281,33 @@ public class SingleLinkedListAllFeature {
 	   head= prev;
 	}
 	
+	
+	/**
+	 * Find Middle node of linked list Find (l-1)/2 node If length of linked list is
+	 * l.
+	 * 
+	 * @param head
+	 * @return
+	 */
+	Node findMiddleNodeOfList() {
+
+		if (head == null) { // If node is null
+			return null;
+		}
+		if (head.next == null) { // If Only one node (1-1)/2 0th Index node
+			return head;
+		}
+		Node slow = head;
+		Node fast = head;
+
+		while (fast.next != null && fast.next.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+
+		return slow;
+	}
+	
 	// Traversing LinkedList
 	public void traversal() {
 
@@ -309,7 +336,7 @@ public class SingleLinkedListAllFeature {
 
 	SingleLinkedListAllFeature linkedList = new SingleLinkedListAllFeature();
 		System.out.println("Inserting Node at beginning..");
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i <=5; i++) {
 			linkedList.insertAtBeginning(i);
 		}
 		linkedList.traversal();
@@ -346,6 +373,11 @@ public class SingleLinkedListAllFeature {
 		linkedList.traversal();
 		System.out.println("Search element linked list");
 		
+		// Find middle node of Linked List
+
+		Node middleNode = linkedList.findMiddleNodeOfList();
+		System.out.println("Middle node of linked list is" + middleNode.data);
+
 		int element=100;
 		boolean isFound=linkedList.search(element);
 		if(isFound) {
@@ -353,6 +385,8 @@ public class SingleLinkedListAllFeature {
 		}else {
 			System.out.println(element+" not found in linked list");
 		}
+		
+		
 		
 	}
 }
