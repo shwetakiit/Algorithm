@@ -33,9 +33,11 @@ public class DoublyLinkedList {
 			head=node;
 			return head;
 		}
-		
-		node.next = head;
+		DoublyNode temp=head;
+		node.next = temp;
 		node.prev = null; // Just for code reading easy not required by default node prev value is null
+		temp.prev=node;
+		
 		head = node;
 		return head;
 	}
@@ -205,18 +207,21 @@ public class DoublyLinkedList {
 	}
 
 	// Delete node from begnning
-	public void deleteFirstNode() {
+	public DoublyNode deleteFirstNode() {
 		if (head == null) {
 
 			System.out.println("Empty Linked List");
 		} else {
 			DoublyNode temp = head;
-			head = head.next;
-			head.prev = temp.prev;
+			temp = temp.next;
+			temp.prev = null;
+			head=temp;
+		
 		}
+		return head;
 	}
 
-	public void deleteNodeAtEnd() {
+	public DoublyNode deleteNodeAtEnd() {
 		boolean isDeleted = false;
 		if (head == null) {
 
@@ -238,29 +243,35 @@ public class DoublyLinkedList {
 		if (isDeleted) {
 			System.out.println("Node delted ");
 		}
+		
+		return head;
 	}
 
 	
 	public void deleteGivenItem(int item) {
 		boolean isDeleted = false;
-		DoublyNode temp = head;
+		
 
 		if (head == null) {
 			System.out.println("List is empty");
-		} else if (temp.data == item) {
+		} else if (head.data == item) { //If single node in list
 
+			DoublyNode temp = head;
 			head = temp.next;
 			head.prev = temp.prev;
 			isDeleted = true;
 
 		} else {
-
-			while (temp.next != null) {
+			DoublyNode temp = head;
+			while (temp!= null) {
 
 				if (temp.data == item) {
 					temp.prev.next = temp.next;
+					if(temp.next!=null) { //If it is last node so temp.next is null
 					temp.next.prev = temp.prev;
+					}
 					isDeleted = true;
+					break;
 
 				}
 				temp = temp.next;
@@ -275,32 +286,41 @@ public class DoublyLinkedList {
 	}
 
 	// Delete Item at given position
-	public void deleteNoteAtGivenPosition(int position) {
-		DoublyNode temp = head;
-		boolean isDeleted = false;
+	public DoublyNode deleteNoteAtGivenPosition(int position) {
+	
 		if (head == null) {
 			System.out.println("List is Empty");
 		} else if (position <= 0) {
 			System.out.println("Please inter valid position eg from 1 onwards ..");
 		} else if (position == 1) {
+			DoublyNode temp = head;
 			temp = temp.next;
 			temp.prev = null;
 			head = temp;
-			isDeleted = true;
+			
 		} else {
-			try {
-				for (int i = 0; temp != null && i < position - 1; i++) {
-					temp = temp.next;
-				}
-				temp.prev.next = temp.next;
-				temp.next = temp.prev;
-				isDeleted = true;
-			} catch (Exception e) {
-				System.out.println("Position is out of range");
-			}
-
+			DoublyNode temp = head;
+			   int index=0;
+			   
+			   while(index<position-1 && temp.next!=null) {
+				   temp = temp.next;
+				   index++;
+			   }
+				
+		
+			   if(position-1>index) { //Delete last node If delete position cross the length of list.
+				   System.out.println("Inavlid position .It is beyond the length of list");
+				   
+				  } else {
+				     temp.prev.next=temp.next;
+				     if(temp.next!=null) { //If temp is last node so temp.next  is null
+					 temp.next.prev=temp.prev;
+				     }
+				   
+			   }
+			 }
+            return head;
 		}
-	}
 
 	// Traverse Node
 	public void traversal() {
@@ -360,19 +380,16 @@ public class DoublyLinkedList {
 		linkedList.deleteFirstNode();
 		linkedList.traversal();
 
-		linkedList.insertAtBeginning(100);
-		linkedList.traversal();
-
 		System.out.println("Delete last node ");
 		linkedList.deleteNodeAtEnd();
 		linkedList.traversal();
 
 		System.out.println("Delete given item");
-		linkedList.deleteGivenItem(4);
+		linkedList.deleteGivenItem(100);
 		linkedList.traversal();
 
 		System.out.println("Delete item at given position");
-		linkedList.deleteNoteAtGivenPosition(6);
+		linkedList.deleteNoteAtGivenPosition(3);
 		linkedList.traversal();
 
 	}
