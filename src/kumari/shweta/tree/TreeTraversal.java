@@ -2,6 +2,7 @@
  * 
  */
 package kumari.shweta.tree;
+
 /**
  * @author Shweta kumari
  *
@@ -12,7 +13,7 @@ public class TreeTraversal {
 		if(root == null) {
 			return;
 		}
-		System.out.print(root.data);
+		System.out.print(root.data+" ");
 		preorder(root.left);
 		preorder(root.right);
 	}
@@ -34,8 +35,38 @@ public class TreeTraversal {
 		}
 		postorder(root.left);
 		postorder(root.right);
-		System.out.print(root.data);
+		System.out.print(root.data+" ");
 	}
+	
+	//Total no of node in tree .
+	public static  int sizeOfTree(Node root) {
+		
+		if(root==null) {
+			return 0;
+		} 
+		
+		int l= sizeOfTree(root.left);
+		int r= sizeOfTree(root.right);
+		return l+r+1;
+		
+	}
+	
+	/*
+	 * Height of longest path is no of edges between root node and leaf 
+	 * node of tree is Height of tree
+	 * Note :We are counting no of edges.It can be ask  no of node is height.
+	 */
+	
+	public static int heightOfTree(Node root) {
+		if(root==null) {
+			return -1;
+		}
+		
+		int heightOfLeftSubtree = heightOfTree(root.left);
+		int heightOfRightSubtree = heightOfTree(root.right);
+		return Math.max(heightOfLeftSubtree, heightOfRightSubtree)+1;
+	}
+	
 	
 	public static void convert_morror(Node root) {
 		
@@ -73,6 +104,12 @@ public class TreeTraversal {
 		System.out.println("Mirror convereted then print inorder");
 		preorder(root);
 		
+		//Size of tree 
+		int sizeOfTree = sizeOfTree(root);
+		System.out.println("Size of tree is  "+sizeOfTree);
+		//Height of tree.
+		int heightOfTree = heightOfTree(root);
+		System.out.println("Height of tree is "+heightOfTree);
 	}
 	
 
