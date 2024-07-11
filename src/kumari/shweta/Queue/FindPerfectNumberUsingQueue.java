@@ -22,8 +22,8 @@ Problem Constraints
 */
 
 public class FindPerfectNumberUsingQueue {
-	
-	//TC->O(N) SC->O(N)
+
+	// TC->O(N) SC->O(N)
 
 	public String findNthPerfectNumber(int N) {
 
@@ -42,7 +42,8 @@ public class FindPerfectNumberUsingQueue {
 		String num = "";
 		while (true) {
 
-			num = queue.poll();
+			num = queue.peek();
+			queue.poll();
 			queue.offer(num + "1");
 			count++;
 			if (count == N) {
@@ -50,6 +51,7 @@ public class FindPerfectNumberUsingQueue {
 				break;
 			}
 			queue.offer(num + "2");
+			count++;
 			if (count == N) {
 				nthPerfectNum = num + "2";
 				break;
@@ -57,15 +59,15 @@ public class FindPerfectNumberUsingQueue {
 
 		}
 
-		StringBuffer sBuffer = new StringBuffer(nthPerfectNum);
-		return nthPerfectNum + sBuffer.reverse();
+		StringBuffer sBuffer = new StringBuffer(nthPerfectNum).reverse();
+		return nthPerfectNum + sBuffer.toString();
 
 	}
 
 	public static void main(String[] args) {
 
 		FindPerfectNumberUsingQueue obj = new FindPerfectNumberUsingQueue();
-		String nthPerfectNum = obj.findNthPerfectNumber(6);
+		String nthPerfectNum = obj.findNthPerfectNumber(9);
 		System.out.println("Nth perfect number is" + nthPerfectNum);
 
 	}
