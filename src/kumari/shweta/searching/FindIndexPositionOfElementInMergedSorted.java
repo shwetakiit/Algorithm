@@ -40,13 +40,26 @@ public class FindIndexPositionOfElementInMergedSorted {
 		return ans;
 
 	}
+	
+	//Find count of element smaller than than mid element using Binary search.
 
-	private int countOfSmallerElement(int[] a, int mid) {
+	private int countOfSmallerElement(int[] a, int element) {
+
 		int count = 0;
-		for (int i = 0; i < a.length; i++) {
-			if (a[i] < mid) {
-				count++;
+
+		int left = 0;
+		int right = a.length - 1;
+
+		while (left <= right) {
+
+			int mid = (left + right) / 2;
+			if (a[mid] < element) {
+				count = mid + 1;
+				left = mid + 1;
+			} else {
+				right = mid - 1;
 			}
+
 		}
 
 		return count;
