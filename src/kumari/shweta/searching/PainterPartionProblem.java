@@ -4,9 +4,6 @@
  */
 package kumari.shweta.searching;
 
-import java.util.Arrays;
-
-
 /*
 Problem Description
 Given 2 integers A and B and an array of integers C of size N. Element C[i] represents the length of ith board.
@@ -69,9 +66,9 @@ public class PainterPartionProblem {
 		long left = maxElement;
 		long right = maxTime;
 		long ans = 0;
-		if (noOfPainter == 1) {
-			left = left % mod;
-			long result = (left * timePerUnit);
+		if (noOfPainter == 1) { //If painter only one then It all board should be painted by one painter only/
+		
+			long result = (right * timePerUnit);
 			return (int) (result % mod);
 		}
 		while (left <= right) {
@@ -120,43 +117,12 @@ public class PainterPartionProblem {
 
 	}
 	
-	/*
-	private static int minimumTimetoPaint(int noOfPainter, int timePerUnit, List<Integer> boardLength) {
-
-		long mod = 10000003;
-
-		int sumOfArray = boardLength.stream().reduce(0, (i,j)->(i+j));
-		Optional<Integer> maxElement  = boardLength.stream().max(Integer::compareTo);
-		int maxTime = sumOfArray;
-
-		long left = maxElement.get();
-		long right = maxTime;
-		long ans = 0;
-		if (noOfPainter == 1) {
-			left = left % mod;
-			long result = (left * timePerUnit);
-			return (int) (result % mod);
-		}
-		while (left <= right) {
-
-			long mid = (left + right) / 2;
-			boolean isPaintPossible = isItpossible(noOfPainter, timePerUnit, bo, mid);
-			if (isPaintPossible) {
-				ans = mid % mod;
-				right = mid - 1;
-			} else {
-				left = mid + 1;
-			}
-		}
-		return (int) ((ans * timePerUnit) % mod);
-	}
-*/
 
 	public static void main(String[] args) {
-
-		int noOfPainter=2;
-		int timePerUnit=2;
-		int arr[]= {5,3,6,1,9};
+		PainterPartionProblem obj = new PainterPartionProblem();
+		//int noOfPainter=2;
+		//int timePerUnit=2;
+		//int arr[]= {5,3,6,1,9};
 
 		// int noOfPainter=4;
 		// int timePerUnit=10;
@@ -170,12 +136,12 @@ public class PainterPartionProblem {
 		// int timePerUnit=10;
 		// int arr[]= {1};
 
-		//int noOfPainter = 1;
-		//int timePerUnit = 1000000;
-		//int arr[] = { 1000000, 1000000 };
+		int noOfPainter = 1;
+		int timePerUnit = 1000000;
+		int arr[] = { 1000000, 1000000 };
 
 		int minTime = minimumTimetoPaintBoard(noOfPainter, timePerUnit, arr);
 		System.out.println("Minimum time taken to paint all borads with given no of painters" + minTime);
 
-	}
+	  }
 }
