@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-08-09
  */
-package kumari.shweta.searching;
+package kumari.shweta.binarysearch;
 
 /**
  * Given N boards with length of each boards 

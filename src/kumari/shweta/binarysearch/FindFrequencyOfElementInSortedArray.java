@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-24
  */
-package kumari.shweta.searching;
+package kumari.shweta.binarysearch;
 
 /**
  * Find Frequency of K element in sorted array using binary search TC ->O(log2N)

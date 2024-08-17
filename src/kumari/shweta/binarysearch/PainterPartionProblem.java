@@ -2,7 +2,9 @@
  * @author Shweta Kumari
  *2024-08-13
  */
-package kumari.shweta.searching;
+package kumari.shweta.binarysearch;
+
+import java.util.Arrays;
 
 /*
 Problem Description
