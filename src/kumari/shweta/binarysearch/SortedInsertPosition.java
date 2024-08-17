@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-29
  */
-package kumari.shweta.binarysearch;
+package kumari.shweta.searching;
 /* Problem Description
 You are given a sorted array A of size N and a target value B.
 Your task is to find the index (0-based indexing) of the target value in the array.

@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-23
  */
-package kumari.shweta.binarysearch;
+package kumari.shweta.searching;
 
 public class BinarySearchInArray {
 

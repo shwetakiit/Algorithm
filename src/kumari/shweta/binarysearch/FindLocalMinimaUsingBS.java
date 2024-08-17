@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-25
  */
-package kumari.shweta.binarysearch;
+package kumari.shweta.searching;
 
 /**
  * Given Unsorted Array of N distinct elements .Find Any local Minima Note Local

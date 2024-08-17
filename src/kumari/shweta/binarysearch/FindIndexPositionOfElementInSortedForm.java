@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-31
  */
-package kumari.shweta.binarysearch;
+package kumari.shweta.searching;
 
 /**
  * Given N distinct elements in array and array is unsorted .Find element at Kth

@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-08-02
  */
-package kumari.shweta.binarysearch;
+package kumari.shweta.searching;
 
 /**
  * Given two sorted array . Find K'th Position of element If we can merged in
