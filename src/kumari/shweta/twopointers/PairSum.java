@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-08-16
  */
-package kumari.shweta.searching;
+package kumari.shweta.twopointers;
 
 /**
  * Given arr[N] with sorted distinct elements .Count all the pairs (i,j) such

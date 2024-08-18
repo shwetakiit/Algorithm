@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-26
  */
-package kumari.shweta.searching;
+package kumari.shweta.binarysearch;
 
 
 /*

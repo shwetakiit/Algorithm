@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  * 2024-08-06
  */
-package kumari.shweta.searching;
+package kumari.shweta.binarysearch;
 
 /*Problem Description
 You are given three positive integers, A, B, and C.

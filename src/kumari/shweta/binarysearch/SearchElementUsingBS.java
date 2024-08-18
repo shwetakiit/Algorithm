@@ -2,7 +2,7 @@
  * @author Shweta Kumari
  *2024-07-28
  */
-package kumari.shweta.searching;
+package kumari.shweta.binarysearch;
 
 /*Problem Description
 Given a sorted array of integers A (0-indexed) of size N, find the left most and the right most index of a given integer B in the array A.
