@@ -15,35 +15,28 @@ import java.util.Stack;
  * Return true if parenthesis is valid otherwise false
  */
 public class ValidateParenthesis {
-	Map<Character, Character> map;
 
-	public ValidateParenthesis() {
-		map = new HashMap<>();
-	}
-
-	/**
-	 * 
-	 */
 	private boolean validateParenthesis(String str) {
 
 		Stack<Character> stack = new Stack<>();
-
-		storeParethesisPair(map);
 
 		for (int i = 0; i < str.length(); i++) {
 
 			char ch = str.charAt(i);
 			if (ch == '(' || ch == '{' || ch == '[') { // Opening parenthesis push in stack
 				stack.push(ch);
-			} else { // Closing parenthesis
+			} else if (ch == ')' || ch == '}' || ch == ']') { // Closing parenthesis
 
 				if (stack.size() == 0) {// Closing parenthesis is more than opening -invalid
 					return false;
-				} else if (map.get(ch) != stack.peek()) { // If opening parenthesis in stack is not same with closing
-															// parenthesis
-					return false;
-				} else {
-					stack.pop();
+				} else { // If opening parenthesis in stack is not same with closing parenthesis
+
+					char temp = stack.pop();
+
+					if (!matchParethesisPair(ch, temp)) { // If matching is true then we need to iterate till last
+															// expression .
+						return false;
+					}
 				}
 
 			}
@@ -53,17 +46,31 @@ public class ValidateParenthesis {
 		return stack.isEmpty();
 	}
 
-	private void storeParethesisPair(Map<Character, Character> map) {
-		map.put(']', '[');
-		map.put('}', '{');
-		map.put(')', '(');
+	private boolean matchParethesisPair(char element, char top) {
+
+		if (top == '(' && element == ')') {
+			return true;
+		}
+		if (top == '{' && element == '}') {
+			return true;
+		}
+		if (top == '[' && element == ']') {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static void main(String[] args) {
-		// String str="[]{}()" ;
-		String str = "([{])";
+
+		String str1 = "[]{}()";
+		String str2 = "([{])";
+		String str3 = "[A/(B-C)*D]";
+		String str4="A*(B-C)}+D";
+		String str5 ="[A+B-(C%D}]";
+		
 		ValidateParenthesis obj = new ValidateParenthesis();
-		boolean isValid = obj.validateParenthesis(str);
+		boolean isValid = obj.validateParenthesis(str5);
 		System.out.println("Is given parenthesis is valid ?" + isValid);
 	}
 }
