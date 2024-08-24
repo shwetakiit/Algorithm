@@ -10,43 +10,101 @@ Problem Constraints
 0 <= |A| = 105
 */
 
-
-
 public class SortSingleLinkedList {
-	
-	
+
 	/**
-	 * TC -O(NlogN+N) , SC O(logN)  
+	 * TC -O(NlogN+N) , SC O(logN)
+	 * 
 	 * @param node
 	 * @return
 	 */
 
-	public Node mergeSortLinkedList(Node node) {
+	Node sortList(Node node) {
 
-		Node head = node;
-		if (head == null || head.next == null) {
-			return head;
+		if (node == null || node.next == null) { //Base case 
+			return node;
 		}
 
-		Node midNode = getMiddleNode(head);
-		Node head2 = midNode.next; // Created new head for second half list
-		midNode.next = null;
-		head = mergeSortLinkedList(head); // Apply mergeSort on first half list;
-		head2 = mergeSortLinkedList(head2);
+		// Find middle node to break the list in two part for applying merge sort .
+		Node middleNode = getMiddleNode(node);
 
-		return mergedSortedLinkedList(head, head2);
+		Node head1 = node;
+		Node head2 = middleNode.next;
+		middleNode.next = null; // Now head1 is one list till middle node and head2 is second list after middle
+								// node till last .
+		Node h1 = sortList(head1);
+		Node h2 = sortList(head2);
+		return mergeSortedList(h1, h2);
 	}
 
 	/**
-	 * Merge the two sorted linked list.
-	 * 
-	 * @param head
-	 * @param head2
+	 * @param h1
+	 * @param h2
 	 * @return
 	 */
-	private Node mergedSortedLinkedList(Node head, Node head2) {
+	private Node mergeSortedList(Node node1, Node node2) {
 
-		return MergeTwoSortedList.mergeTwoSortedNode(head, head2);
+		Node head = null;
+		Node t1 = null;
+		Node t2 = null;
+		Node h1 = node1;
+		Node h2 = node2;
+		Node tail = null;
+
+		if (h1 == null) {
+			return h2;
+		}
+		if (h2 == null) {
+			return h2;
+		}
+
+		if (h1.data < h2.data) {
+
+			head = h1;
+			tail = h1;
+			t1 = h1.next;
+			t2 = h2;
+
+		} else {
+			head = h2;
+			tail = h2;
+			t2 = h2.next;
+			t1 = h1;
+		}
+
+		while (t1 != null && t2 != null) {
+
+			if (t1.data < t2.data) {
+				tail.next = t1;
+				t1 = t1.next;
+				tail = tail.next;
+			} else {
+				tail.next = t2;
+				t2 = t2.next;
+				tail = tail.next;
+
+			}
+		}
+
+		if (t1 == null) {
+			tail.next = t2;
+		}
+		if (t2 == null) {
+			tail.next = t1;
+		}
+
+		return head;
+	}
+
+	public void traversal(Node head) {
+		Node tNode = head;
+		if (tNode == null) {
+			System.out.println("Empty list");
+		}
+		while (tNode != null) {
+			System.out.println(tNode.data);
+			tNode = tNode.next;
+		}
 	}
 
 	/**
@@ -84,10 +142,8 @@ public class SortSingleLinkedList {
 		head.next.next.next.next.next.next = new Node(11);
 
 		SortSingleLinkedList obj = new SortSingleLinkedList();
-		Node sortedNode = obj.mergeSortLinkedList(head);
-
-		// Traverse sorted node
-		MergeTwoSortedList.traversal(sortedNode);
+		Node node = obj.sortList(head);
+		obj.traversal(node);
 
 	}
 
