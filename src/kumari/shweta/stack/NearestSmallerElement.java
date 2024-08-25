@@ -4,6 +4,7 @@
  */
 package kumari.shweta.stack;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -87,6 +88,31 @@ public class NearestSmallerElement {
 		Collections.reverse(result);
 		return result;
 	}
+	
+	//Brute force approach for next smaller element. TC O(N^2) SC ->O(1)
+	
+	public static List<Integer> nextSmaller(List<Integer> input){
+		
+		List<Integer> result= new ArrayList<>(input.size());
+
+		for(int i=input.size()-1;i>=0;i--) {
+			boolean found=false;
+			for(int j=i+1;j<=input.size()-1;j++) {
+				if(input.get(i)>input.get(j)) {
+					result.add(input.get(j));
+					found=true;
+					break;
+				}
+			}
+			if(!found) {
+				result.add(-1);
+			}
+		}
+		
+		Collections.reverse(result); 
+		
+		return result;
+	}
 
 	
 	public static void main(String[] args) {
@@ -97,5 +123,8 @@ public class NearestSmallerElement {
 		System.out.println("Smaller left side  element for each element  "+bfResult);
 		List<Integer> rSmaller = NextSmaller(input);
 		System.out.println("Smaller right hadn side nearest element"+rSmaller);
+		
+		List<Integer> rsmallerBF = nextSmaller(input);
+		System.out.println("Next smaller using BF approach"+rsmallerBF);
 	}
 }
