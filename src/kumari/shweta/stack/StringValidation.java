@@ -1,7 +1,7 @@
 /**
  * 
  */
-package kumari.shweta.LinkedList;
+package kumari.shweta.stack;
 
 import java.util.Stack;
 
