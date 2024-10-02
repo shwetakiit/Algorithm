@@ -7,6 +7,10 @@ package kumari.shweta.hashing;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
+
+
 /*
 
 Problem Description
@@ -23,7 +27,7 @@ If there are multiple such windows, return the first occurring minimum window ( 
 
 Problem Constraints
 
-1 <= size(A), size(B) <= 106
+1 <= size(A), size(B) <= 10^6
 
 
 
@@ -51,10 +55,10 @@ public class WindowString {
 		A = A.toLowerCase();
 		B = B.toLowerCase();
 
-		int freqA[] = new int[26];
+		int freqA[] = new int[26]; // If Any character then we should take array of size 128 as per total Ascii and to find index we should not subtract  0(First Ascii of null)  eg freq[ch-0]--> freq[ch] 
 		int freqB[] = new int[26];
 
-		int N = A.length();
+		int N = B.length();
 
 		for (int i = 0; i < N; i++) {
 
@@ -72,23 +76,21 @@ public class WindowString {
 		int left = 0, right = N - 1;
 		int ans = Integer.MAX_VALUE;
 		String result = "";
-		while (right < B.length()) {
+		while (right < A.length()) {
 
-			if (compaire(freqA, freqB)) { // If freqeuncy of A is available in Freqency in B then try to release the
-											// chacater from freqB to make minimum length
+			if (compaire(freqA, freqB)) { // If frequency of A is available in frequency in B then try to release the character from freqB to make minimum length
 
 				ans = Math.min(ans, right - left + 1);
-				result = B.substring(left, right + 1);
-				freqB[(B.charAt(left)) - 'a']--; // Release the character
+				result = A.substring(left, right + 1);
+				freqA[(A.charAt(left)) - 'a']--; // Release the character
 				left++;
-			} else { // If freqency of A is less in freqB then try to Acquire new element from String
-						// B
+			} else { // If frequency of A is less in freqB then try to Acquire new element from String  B
 
 				right++;
-				if (right == B.length()) {
+				if (right == A.length()) {
 					break;
 				}
-				freqB[(B.charAt(right)) - 'a']++; // Acquire new character
+				freqA[(A.charAt(right)) - 'a']++; // Acquire new character
 
 			}
 
@@ -105,8 +107,8 @@ public class WindowString {
 	 * @return
 	 */
 	private boolean compaire(int[] freqA, int[] freqB) {
-		for (int i = 0; i < freqA.length; i++) {
-			if (freqA[i] > freqB[i]) {
+		for (int i = 0; i < freqB.length; i++) {
+			if (freqA[i] < freqB[i]) {
 				return false;
 			}
 
@@ -115,15 +117,18 @@ public class WindowString {
 
 	}
 
-	// Second way use HashMap instead of freqency Array becase we can't find index
-	// of array freqencyArray with [ch-'a]
-	// In case letters are mix of Uppercase ,lowercase and numeric
+	// Second way use HashMap instead of Array .In Array we need to find index  alphanumeric data for each uppercase,lowecase character/alphabet/numeric
+
 	public String findMinLengthSubstring(String A, String B) {
+
 		Map<Character, Integer> freqA = new HashMap<>();
 		Map<Character, Integer> freqB = new HashMap<>();
-		int N = A.length();
-		int M = B.length();
+		int M = A.length();
+		int N = B.length();
 
+		if (N > M) { // Eadge case , If length of String B is more then length of String A so we can't create String window of length B in String A .
+			return "";
+		}
 		for (int i = 0; i < N; i++) {
 			if (freqA.containsKey(A.charAt(i))) {
 				freqA.put(A.charAt(i), freqA.get(A.charAt(i)) + 1);
@@ -143,14 +148,23 @@ public class WindowString {
 		int left = 0, right = N - 1;
 		String result = "";
 		int ans = Integer.MAX_VALUE;
-
+		int minWindow = Integer.MAX_VALUE;
+		int startIdx = -1;
+		int endIdx = -1;
 		while (right < M) {
 
 			if (compaireWithCount(freqA, freqB)) {
-				result = B.substring(left, right + 1);
-				ans = Math.min(ans, right - left + 1);
 
-				freqB.put(B.charAt(left), freqB.get(B.charAt(left)) - 1);
+				ans = Math.min(ans, right - left + 1);
+				int currentWindow = right - left + 1;
+				if (currentWindow < minWindow) {
+					minWindow = currentWindow;
+					startIdx = left;
+					endIdx = right;
+					result = A.substring(startIdx, endIdx + 1);
+				}
+
+				freqA.put(A.charAt(left), freqA.get(A.charAt(left)) - 1);
 				left++;
 			} else {
 				right++;
@@ -158,29 +172,25 @@ public class WindowString {
 					break;
 				}
 
-				if (freqB.get(B.charAt(right)) != null) {
-					freqB.put(B.charAt(right), freqB.get(B.charAt(right)) + 1);
+				if (freqA.get(A.charAt(right)) != null) {
+					freqA.put(A.charAt(right), freqA.get(A.charAt(right)) + 1);
 				} else {
 
-					freqB.put(B.charAt(right), 1);
+					freqA.put(A.charAt(right), 1);
 				}
 
 			}
 
 		}
-		System.out.println("Length of substring of B which contains all A " + ans);
+		System.out.println(result);
 
 		return result;
+
 	}
 
-	/**
-	 * @param freqA
-	 * @param freqB
-	 * @return
-	 */
 	private boolean compaireWithCount(Map<Character, Integer> freqA, Map<Character, Integer> freqB) {
-		for (Character ch : freqA.keySet()) {
-			if (freqB.get(ch) == null || freqB.get(ch) < freqA.get(ch)) {
+		for (Character ch : freqB.keySet()) {
+			if (freqA.get(ch) == null || freqA.get(ch) < freqB.get(ch)) {
 				return false;
 			}
 		}
@@ -190,22 +200,23 @@ public class WindowString {
 
 	public static void main(String[] args) {
 
-		String A = "abca";
-		String B = "xatybaxacta";
-
-		String A1 = "ABC";
-		String B1 = "ADOBECODEBANC";
+		String A = "xatybaxacta";
+		String B = "abca";
 
 		String A2 = "o";
 		String B2 = "w";
+		
 		WindowString obj = new WindowString();
-		int result = obj.findMimumLengthSubstring(A1, B1);
+		int result = obj.findMimumLengthSubstring(A, B);
 
 		System.out.println(
 				"Minimum length of sub string from Stribg B which contain all character of String A is " + result);
 
+		String A1 = "ADOBECODEBANC";
+		String B1 = "ABC";
+
 		String out = obj.findMinLengthSubstring(A1, B1);
-		System.out.println("Minimum length of substring wich contain String  A" + out);
+		System.out.println("Minimum length of substring wich contain String  " + out);
 	}
 
 }
