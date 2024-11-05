@@ -4,7 +4,10 @@
  */
 package kumari.shweta.twopointers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -71,25 +74,71 @@ public class PairSum {
 	//Idea 2: Using two pointer approach --Question 1
 
 	public int countPair(int arr[], int K) {
+		List<List<Integer>> pairs = new ArrayList<>();
 		int i = 0;
 		int count = 0;
 		int j = arr.length - 1;
 		while (i < j) {
 			if (arr[i] + arr[j] == K) {
+			    pairs.add(Arrays.asList(arr[i],arr[j]));
 				count++;
 				i++;
 				j--;
+				
+				
 			} else if (arr[i] + arr[j] < K) {
 				i++;
 			} else {
 				j--;
 			}
 		}
+		System.out.println(pairs);
 
 		return count;
 
 	}
 	
+	/**
+	 * If Give array has duplicate element and we need to count only distinct pair
+	 * @param arr
+	 * @param K
+	 * @return
+	 */
+	public int countDistinctPair(int arr[], int K) {
+		
+		Arrays.sort(arr); //Need to sort for distinct pair
+		List<List<Integer>> pairs = new ArrayList<>();
+		int i = 0;
+		int count = 0;
+		int j = arr.length - 1;
+		while (i < j) {
+			if (arr[i] + arr[j] == K) {
+				
+				 pairs.add(Arrays.asList(arr[i],arr[j]));
+			
+				while(i<j && arr[i]==arr[i+1]) { //Skip duplicate element
+					i++;
+				}
+			   
+				while(i<j && arr[j]==arr[j-1]) { //Skip duplicate element
+					j--;
+				}
+				
+				count++;
+				i++;
+				j--;
+				
+			} else if (arr[i] + arr[j] < K) {
+				i++;
+			} else {
+				j--;
+			}
+		}
+		System.out.println(pairs);
+
+		return count;
+
+	}
 	
 	/* Question 1
 	 * Idea 3: using hashShset 
@@ -163,10 +212,13 @@ public class PairSum {
 
 	public static void main(String[] args) {
 
-		int arr[] = { -3, 0, 1, 3, 6, 8, 9, 11, 11, 14, 18, 25, };
-		int k = 17;
+		//int arr[] = { -3, 0, 1, 3, 6, 8, 9, 11, 11, 14, 18, 25, };
+		//int k = 17;
+		int arr[]= {1, 4, 1, 4, 5};
+		int k=5;
 		PairSum obj = new PairSum();
-		int count = obj.countPair(arr, k);
+		//int count=obj.countPair(arr, k);
+		int count = obj.countDistinctPair(arr, k);
 		System.out.println("No of pairs is " + count);
 
 		int countPair = obj.countPairWthHashSet(arr, k);
