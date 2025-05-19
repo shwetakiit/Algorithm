@@ -7,6 +7,7 @@ package kumari.shweta.tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class FindNthLargestUisngHeap {
 
@@ -72,6 +73,33 @@ public class FindNthLargestUisngHeap {
 		
 		
 	}
+	
+
+	/**  Second Way use in build function which work like min heap 
+	 * @param list
+	 * @param k
+	 */
+	
+	//TC --K+(N-K)logK   SC -> O(K)
+	private int findKthLarget(List<Integer> list, int k) {
+	  //Build minHeap till kth element.
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+	  for(int i=0;i<k;i++) {
+		  pq.add(list.get(i));    
+	  }
+	  
+	  System.out.println("Min heap "+pq);
+	  int root=pq.peek();
+	  for(int i=k;i<list.size();i++) {
+		  if(list.get(i)>root) {
+			   pq.poll();
+			  pq.add(list.get(i));
+		  }
+	  }
+	  
+	  return pq.peek();
+		
+	}
 	public static void main(String[] args) {
 
 		FindNthLargestUisngHeap obj = new FindNthLargestUisngHeap();
@@ -88,5 +116,12 @@ public class FindNthLargestUisngHeap {
 
 		List<Integer> output2 = obj.findNthLargestUsingMaxHeap(list1, 3);
 		System.out.println(output2);
+		
+		//Use Priority queue directly for building max heap and min heap.
+		
+		List<Integer> list3 = Arrays.asList(8, 5, 1, 2, 4, 9, 7);
+	     int kthLargest=  obj.findKthLarget(list3,k);
+		 System.out.println("K'th largest element"+kthLargest);
 		}
+
 	}
