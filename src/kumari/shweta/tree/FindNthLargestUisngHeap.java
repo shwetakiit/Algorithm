@@ -89,8 +89,9 @@ public class FindNthLargestUisngHeap {
 	  }
 	  
 	  System.out.println("Min heap "+pq);
-	  int root=pq.peek();
+	
 	  for(int i=k;i<list.size();i++) {
+		  int root=pq.peek();
 		  if(list.get(i)>root) {
 			   pq.poll();
 			  pq.add(list.get(i));
