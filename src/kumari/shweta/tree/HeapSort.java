@@ -8,6 +8,7 @@ package kumari.shweta.tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 
 public class HeapSort {
@@ -194,6 +195,33 @@ public class HeapSort {
 		}
 		return result;
 	}
+	
+	//Use Inbuild function to creating minHeap 
+	
+	public static List<Integer> sortNearlySortedArray(List<Integer> list,int k){
+		
+		PriorityQueue<Integer> pq= new PriorityQueue<>();
+		List<Integer> result = new ArrayList<>();
+		for(int i=0;i<=k;i++) {
+			pq.add(list.get(i));
+		}
+		
+		for(int i=k+1;i<list.size();i++) {
+			int root=pq.poll();
+			
+			result.add(root);
+			pq.add(list.get(i));
+		
+		}
+		
+		while(!pq.isEmpty()){
+			
+			result.add(pq.poll());
+		}
+				
+		System.out.println("Sorted list"+result);
+		return result;
+	}
 	public static void main(String[] args) {
 
 		HeapSort obj = new HeapSort();
@@ -213,6 +241,11 @@ public class HeapSort {
 		List<Integer> sortedQueue = obj.sortedQueueInIncreasingOfPriorities(priorities, 4);
 		System.out.println("Sorted queue in increaing order of Priority is "+sortedQueue);
 		
+		
+		//Sort List in ascending order --
+		List<Integer> list2=  new ArrayList<>(Arrays.asList(13,22,31,45,11,20,48,60,50));
+		int k=4;
+		sortNearlySortedArray(list2, k);
 		
 	}
 }
