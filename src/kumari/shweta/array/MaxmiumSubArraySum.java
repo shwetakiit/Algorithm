@@ -20,21 +20,27 @@ public class MaxmiumSubArraySum {
 
 		int sum = 0;
 		int result = Integer.MIN_VALUE;
+		int starIdx=0;
+		int endIdx=0;
 		for (int i = 0; i < arr.length; i++) {
 			sum = sum + arr[i];
 			if (sum > result) {
+			  endIdx=i;
 				result = sum;
 			}
 			if (sum < 0) {
+				starIdx=i+1;
 				sum = 0;
 			}
 		}
+		System.out.println("startIdx "+starIdx+"endIdx "+endIdx);
 		return result;
 
 	}
 
 	public static void main(String[] args) {
-		int arr[] = { -3, 2, 4, -1, 3, -4, 3 };
+		//int arr[] = { -3, 2, 4, -1, 3, -4, 3 };
+		int arr[]= {5,6,7,-3,2,-10,-12,8,12,-4,7,-2};
 		int maxSumOfSubarry = findMaximumSubarraySum(arr);
 		System.out.println("Maximum sum of sub array " + maxSumOfSubarry);
 
