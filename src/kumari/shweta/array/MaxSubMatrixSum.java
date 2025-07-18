@@ -17,6 +17,8 @@ package kumari.shweta.array;
  * arr[]={{2,-4,1,3,-1,2},{1,3,2,-7,3,3},{0,-1,1,3,4,-7},{1,-1,-6,4,-4,6}}
  * Output ->  10 
  * 
+ * 3)How to find max sub matrix sum ,If sub matrix can start from anywhere and can end anywhere.
+ * 
  * 
  *
  */
@@ -63,8 +65,7 @@ public class MaxSubMatrixSum {
 	 */
 	public static int maximumSumOfSubMatrix(int arr[][]) {
 		int rowSum[] = new int[arr[0].length];
-		int result = arr[0][0];
-
+		int result = Integer.MIN_VALUE;
 		for (int j = 0; j < arr.length; j++) {
 			for (int i = 0; i < arr[0].length; i++) {
 
@@ -100,7 +101,38 @@ public class MaxSubMatrixSum {
 		}
 		return maxSum;
 	}
+	
+	
+	/**
+	 * Question 3 TC --O(N^2 *M) N -row and M- Column 
+	 * SC --> O(M)
+	 * @param arr
+	 * @return
+	 */
+	
+	public static int maxSumOfSubMatrix(int arr[][]) {
 
+		int result = Integer.MIN_VALUE;
+
+		for (int st = 0; st < arr.length; st++) {
+			int rowSum[] = new int[arr[0].length];
+
+			for (int end = st; end < arr.length; end++) {
+				int sum = 0;
+				for (int j = 0; j < arr[0].length; j++) {
+					rowSum[j] += arr[end][j];
+
+				}
+				
+				result=Math.max(result,kadanes(rowSum));
+			}
+
+		}
+		
+		return result;
+
+	}
+	 
 	public static void main(String[] args) {
 		int arr[][] = { { -3, 2, 3, 4, -6, 4 }, { 5, 5, -5, 2, 2, -7 }, { -4, -3, 1, -1, 1, 4 } };
 
@@ -108,6 +140,8 @@ public class MaxSubMatrixSum {
 
 		int mat[][] = { { 2, -4, 1, 3, -1, 2 }, { 1, 3, 2, -7, 3, 3 }, { 0, -1, 1, 3, 4, -7 },
 				{ 1, -1, -6, 4, -4, 6 } };
-		System.out.println("Mxium sub of sub mtraix start from row 0 and end anywhere" + maximumSumOfSubMatrix(mat));
-	}
+		System.out.println("Mximum sum of sub mtraix start from row 0 and end anywhere " + maximumSumOfSubMatrix(mat));
+	    
+	    System.out.println("Maximum sum of Sub matrix start from  anywhere and end anywhere "+ maxSumOfSubMatrix(mat));
+		}
 }
