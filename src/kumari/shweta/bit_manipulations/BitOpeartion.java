@@ -4,6 +4,8 @@
  */
 package kumari.shweta.bit_manipulations;
 
+import kumari.shweta.string.FirstDayOfSequence;
+
 public class BitOpeartion {
 
 	// Check bit set or unset using left shift operation
@@ -41,6 +43,39 @@ public class BitOpeartion {
 
 		return N;
 	}
+	
+	// Brute force approach since N is int take 32 bit TC --> O(No of bit)
+	public static int countSetBit(int N) {
+
+		int count = 0;
+
+		for (int i = 0; i < 32; i++) {
+			if ((N & (1 << i)) != 0) {
+
+				count++;
+
+			}
+		}
+
+		return count;
+	}
+
+	// Optimized approach to count set bit  --> TC --> O(logN)
+
+	public static int countSetBits(int N) {
+
+		int temp = N;
+		int count = 0;
+
+		while (temp != 0) {
+			if ((temp & 1) == 1) {
+				count++;
+			}
+			temp = temp >> 1;
+		}
+
+		return count;
+	}
 
 	public static void main(String[] args) {
 
@@ -53,6 +88,13 @@ public class BitOpeartion {
 		N = 22;
 		System.out.println("Set ith bit and return in decimal " + setIthBitAndReturnResult(N, ithBit));
 		System.out.println("Toggle ith bit and return in decimal " + toggleIthBit(N, ithBit));
+		
+		N=27;
+		
+		System.out.println("Count set bit "+countSetBit(N));
+		System.out.println("Count set bit using optimized approach"+countSetBits(N));
+		
+		
 	}
 
 }
