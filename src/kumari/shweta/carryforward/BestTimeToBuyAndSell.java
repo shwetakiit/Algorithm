@@ -29,28 +29,36 @@ public class BestTimeToBuyAndSell {
 
 		int maxProfit = 0;
 		int maxStockPrice = stockPrice[N - 1];
-		int buyDay = -1;
-		int sellDay = N - 1;
+		int buyDay = N-2;
+		int sellDay = N -1;
 
 		for (int i = N - 2; i >= 0; i--) {
 			if (stockPrice[i] > maxStockPrice) {
 				maxStockPrice = stockPrice[i];
+				if(i>0) {
+				sellDay=i;
+				}
 
 			}
 
 			int profit = maxStockPrice - stockPrice[i];
 			if (profit > maxProfit) {
 				maxProfit = profit;
+				if(i>=0) {
+				buyDay=i;
+				}
 
 			}
 		}
 
 		if (maxProfit > 0) {
-
-			System.out.println("Max profit " + maxProfit);
+		   
+			System.out.println("Max profit  If buy stock at "+buyDay+" and sell at "+sellDay+ " profit" + maxProfit);
 		} else {
 			System.out.println("No profitable transaction possible");
 		}
+		
+		
 
 	}
 
