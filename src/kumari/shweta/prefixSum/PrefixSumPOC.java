@@ -11,6 +11,23 @@ import java.util.List;
  *Note both s and e should be include.
  */
 public class PrefixSumPOC {
+	
+	
+	
+	  //Brute force approach  TC --> O(Q*N) SC -> O(1)
+	    private static void sumOfElementForRange(int arr[],List<List<Integer>> quries) {
+	    	
+	    	for(List<Integer> query : quries) {
+	    		 int s=query.get(0);
+	    		 int e=query.get(1);
+	    		int  sum=0;
+	    		 for(int i =s;i<=e;i++) {
+	    			 sum=sum+arr[i];
+	    		 }
+	    		 System.out.println("Sum from "+s+" index to "+ e+"index is"+sum);
+	    	}
+	    }
+	
 
 	
 	/**
@@ -52,6 +69,10 @@ public class PrefixSumPOC {
 		int Q = 4;
 		List<List<Integer>> queries = Arrays.asList(Arrays.asList(1, 3), Arrays.asList(2, 7), Arrays.asList(4, 8),
 				Arrays.asList(0, 2));
+		
+		System.out.println("Using brute force approach ");
+		sumOfElementForRange(arr, queries);
+		System.out.println("Using Prefix Sum ");
 		sumOfElementFromStartIdxToEndIdx(arr, Q, queries);
 
 	}
