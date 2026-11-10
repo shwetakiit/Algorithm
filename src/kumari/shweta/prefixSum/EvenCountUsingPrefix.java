@@ -14,11 +14,16 @@ import java.util.List;
  *
  */
 public class EvenCountUsingPrefix {
+	
+	
+	
+	
 
 	/**
 	 * @param arr
 	 * @param queries
-	 * TC -> O(Q*N)
+	 * TC -> O(Q+N)
+	 * SC->O(N)
 	 */
 	private static void findEvenCount(int[] arr, List<List<Integer>> queries) {
 
