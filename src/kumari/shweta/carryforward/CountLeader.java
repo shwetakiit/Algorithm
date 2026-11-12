@@ -5,8 +5,10 @@
 package kumari.shweta.carryforward;
 
 /**
+ * Given an array of size N , Count the number of leaders in the array 
+ * Leader : An element that  is strictly greater than all  the elements on its right side 
  * 
- *
+ * ie. A[i]> A[i+1,i---n-1}
  */
 public class CountLeader {
 	
